@@ -15,6 +15,8 @@ public class MapInfoV3 {
     static int radius = 2;
     //暂存3个鬼的位置
     List<Ghost> ghostList;
+    //记录三个鬼距离人的xy距离
+    List<GhostDistance> ghostDistanceList;
 
     public int charInMapToint(int x, int y) {
         return Integer.parseInt(String.valueOf(map[x][y]));
@@ -104,5 +106,87 @@ public class MapInfoV3 {
         public void setyOfGhost(int yOfGhost) {
             this.yOfGhost = yOfGhost;
         }
+    }
+
+    //鬼距离人的位置
+    class GhostDistance {
+        private int xOfGhostDistance;
+        private int yOfGhostDistance;
+        private Ghost ghost;
+        public GhostDistance(Ghost ghost) {
+            this.ghost = ghost;
+            this.xOfGhostDistance = Math.abs(ghost.getxOfGhost() - xOfLocation_x);
+            this.yOfGhostDistance = Math.abs(ghost.getyOfGhost() - yOfLocation_y);
+        }
+
+        public int getxOfGhostDistance() {
+            return xOfGhostDistance;
+        }
+
+        public void setxOfGhostDistance(int xOfGhostDistance) {
+            this.xOfGhostDistance = xOfGhostDistance;
+        }
+
+        public int getyOfGhostDistance() {
+            return yOfGhostDistance;
+        }
+
+        public void setyOfGhostDistance(int yOfGhostDistance) {
+            this.yOfGhostDistance = yOfGhostDistance;
+        }
+
+        public Ghost getGhost() {
+            return ghost;
+        }
+
+        public void setGhost(Ghost ghost) {
+            this.ghost = ghost;
+        }
+    }
+
+    /**
+     * 获取value
+     * @param s  为null时解析第二参数
+     * @param i
+     * @return
+     */
+    private int getMapValue(String s , int i) {
+
+        if (s != null) {
+
+            switch (s) {
+                case "0":
+                    return 0;
+                case "1":
+                    return 1;
+                case "2":
+                    return 2;
+                case "3":
+                    return 3;
+                case "4":
+                    return 4;
+                case "5":
+                    return 5;
+            }
+        }
+
+        if (i != -1) {
+
+            switch (i) {
+                case 0:
+                    return 0;
+                case 1:
+                    return 1;
+                case 2:
+                    return 2;
+                case 3:
+                    return 3;
+                case 4:
+                    return 4;
+                case 5:
+                    return 5;
+            }
+        }
+        return 0;
     }
 }
