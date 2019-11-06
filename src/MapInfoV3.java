@@ -15,20 +15,16 @@ public class MapInfoV3 {
     //视野半径
     static int radius=2;
 
+    private int[] mValuesOfBlocks=new int[10];
+
     public int charInMapToInt(int x, int y) {
         return Integer.parseInt(String.valueOf(map[x][y]));
     }
     public boolean isGhost(int x, int y) {
-        return String.valueOf(map[xOfLocation_x - 1][yOfLocation_y + 1]).equals("G");
+        return String.valueOf(map[x][y]).equals("G");
     }
     public boolean isWall(int x,int y){
-        return String.valueOf(map[xOfLocation_x-1][yOfLocation_y+1]).equals("9");
-    }
-    //    public int getValue(int x,int y){
-//        return Integer.parseInt(String.valueOf(map[x][y]));
-//    }
-    public int getValueOfGhost(int distance) {
-        return -100;
+        return String.valueOf(map[x][y]).equals("9");
     }
 
     public boolean isOutOfBounds(int x, int y) {
@@ -98,39 +94,115 @@ public class MapInfoV3 {
     }
 
     public int getNextDirection() {
-        int direction = 111;
+
+        int direction ;
+        calculateWeightOfDirections();
+        direction=getPreciseDirection();
         return direction;
     }
 
-    private int[][] weight = new int[2 * radius + 1][2 * radius + 1];
+    //private int[][] weight = new int[2 * radius + 1][2 * radius + 1];
     //系数方阵
     private int[][] coefficients = new int[2 * radius + 1][2 * radius + 1];
 
 
-    public void calculateWeightOfDirections(int direction) {
+    /**
+     * 获取以 吃豆人 为中心的 半径为 radius 的方阵，存放在 tmpMatrix 中；
+     */
+    public void calculateWeightOfDirections() {
         int[][] tmpMatrix = new int[2 * radius + 1][2 * radius + 1];
-        for (int i = xOfLocation_x - radius; i <= xOfLocation_x + radius; i++) {
-            for (int j = xOfLocation_x - radius; j <= xOfLocation_x + radius; j++) {
-                if (isOutOfBounds(i, j)) {
-                    tmpMatrix[i][j] = VALUEOFOUT;
+        
+        for (int i = xOfLocation_x - radius , m=0; i <= xOfLocation_x + radius && m<5 ; i++ , m++) {
+            for (int j = xOfLocation_x - radius , n=0; j <= xOfLocation_x + radius && n<5; j++ , n++) {
+
+                //System.out.println("i_j: " + i +" / "+ j);
+
+                if (i == xOfLocation_x && j == yOfLocation_y) {
+                    tmpMatrix[m][n] = 0;
+                } else if (isOutOfBounds(i, j)) {
+                    //判断 人物 四周的路是否可行
+                    if((m==2 && n==1) || (m==2 && n==3) || (m==1 && n==2) || (m==3 && n==2)){
+                        tmpMatrix[m][n] = -1000;
+                    }else {
+                        tmpMatrix[m][n] = VALUEOFOUT;
+                    }
+
                 } else if (isGhost(i, j)) {
-                    tmpMatrix[i][j] = VALUEOFGHOST;
+                    if((m==2 && n==1) || (m==2 && n==3) || (m==1 && n==2) || (m==3 && n==2)){
+                        tmpMatrix[m][n] = -1000;
+                    }else {
+                        tmpMatrix[m][n] = VALUEOFGHOST;
+                    }
                 } else if (isWall(i, j)) {
-                    tmpMatrix[i][j] = VALUEOFWALL;
-                } else if (i == xOfLocation_x && j == yOfLocation_y) {
-                    tmpMatrix[i][j] = 0;
+                    if((m==2 && n==1) || (m==2 && n==3) || (m==1 && n==2) || (m==3 && n==2)){
+                        tmpMatrix[m][n] = -1000;
+                    }else {
+                        tmpMatrix[m][n] = VALUEOFWALL;
+                    }
                 } else {
-                    tmpMatrix[i][j] = charInMapToInt(i, j);
+                    tmpMatrix[m][n] = charInMapToInt(i, j);
                 }
+
             }
         }
+
+//        for(int i=0;i<5;i++){
+//            System.out.println(String.);
+//        }
         calculate(tmpMatrix);
 
+        calculateEveryBlock(tmpMatrix);
     }
 
-    public void calculateEveryBlock(){}
+    /**
+     *计算 8 个块的总值；
+     * @param matrix 以 吃豆人 为中心的方阵；
+     */
+    public void calculateEveryBlock(int[][] matrix){
+        mValuesOfBlocks[1]= matrix[0][0]+matrix[0][1]+matrix[1][0]+matrix[1][1];
+        mValuesOfBlocks[2]= matrix[0][2]+matrix[1][2];
+        mValuesOfBlocks[3]= matrix[0][3]+matrix[0][4]+matrix[1][3]+matrix[1][4];
+        mValuesOfBlocks[4]= matrix[2][0]+matrix[2][1];
+        mValuesOfBlocks[5]= 0;
+        mValuesOfBlocks[6]= matrix[2][3]+matrix[2][4];
+        mValuesOfBlocks[7]= matrix[3][0]+matrix[3][1]+matrix[4][0]+matrix[4][1];
+        mValuesOfBlocks[8]= matrix[3][2]+matrix[4][2];
+        mValuesOfBlocks[9]= matrix[3][3]+matrix[3][4]+matrix[4][3]+matrix[4][4];
+    }
 
-    public void getPreDirection(){
+    /**
+     * 获取下一步的精确方向
+     * @return
+     */
+    public int getPreciseDirection(){
+//        int w=0;int s=0; int a=0; int d=0;
+        int wTMP=0;int sTMP=0; int aTMP=0; int dTMP=0;
+        int flag_ws; int flag_ad; int bigerInws; int bigerInad;
+        wTMP=mValuesOfBlocks[1]+mValuesOfBlocks[2]+mValuesOfBlocks[3];
+        sTMP=mValuesOfBlocks[7]+mValuesOfBlocks[8]+mValuesOfBlocks[9];
+        aTMP=mValuesOfBlocks[1]+mValuesOfBlocks[4]+mValuesOfBlocks[7];
+        dTMP=mValuesOfBlocks[3]+mValuesOfBlocks[6]+mValuesOfBlocks[9];
+        System.out.println("wTMP="+wTMP+", sTMP="+sTMP+", aTMP="+aTMP+", dTMP="+dTMP);
+        if(wTMP>sTMP){
+            flag_ws=0;
+            bigerInws=wTMP;
+        }else {
+            flag_ws=1;
+            bigerInws=sTMP;
+        }
+        if(aTMP>dTMP){
+            flag_ad=2;
+            bigerInad=aTMP;
+        }else {
+            flag_ad=3;
+            bigerInad=dTMP;
+        }
+
+        if(bigerInad>bigerInws){
+            return flag_ad;
+        }else {
+            return flag_ws;
+        }
 
     }
 

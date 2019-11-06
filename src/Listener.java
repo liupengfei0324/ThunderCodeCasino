@@ -6,9 +6,10 @@ import java.net.Socket;
 public class Listener implements Runnable{
     Socket socket;
     InputStreamReader inputStreamReader;
+    int VersionOfChossed = 3;
 
     static private int flag=0;
-    MapInfo mapInfo;
+    MapInfoV3 mapInfo;
 
     public Listener(Socket s){
         this.socket=s;
@@ -17,7 +18,8 @@ public class Listener implements Runnable{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        mapInfo=new MapInfo();
+
+        mapInfo=new MapInfoV3();
     }
 
     public boolean isInputStreamReady(){
