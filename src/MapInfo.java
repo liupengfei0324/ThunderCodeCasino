@@ -131,7 +131,12 @@ public class MapInfo {
     }
 
 
-
+    /**
+     * 获取某个方向的总值
+     * @param i ： 方向
+     *          w,s,a,d 对应 0,1,2,3
+     * @return
+     */
     public int getValuesForDirections(int i){
         int value=0;
         

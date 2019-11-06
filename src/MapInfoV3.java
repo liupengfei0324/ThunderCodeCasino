@@ -128,6 +128,13 @@ public class MapInfoV3 {
 
     }
 
+    public void calculateEveryBlock(){}
+
+    public void getPreDirection(){
+
+    }
+
+
     public void calculate(int[][] tmpMatrix) {
 
     }
