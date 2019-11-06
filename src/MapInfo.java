@@ -6,6 +6,10 @@ public class MapInfo {
     int xOfLocation_x=0;
     int yOfLocation_y=0;
 
+    //当前方向 w,s,a,d 对应 0,1,2,3
+    int mCurrentDirection;
+
+    //从字符串中创建map
     public void createFromString(String str){
         System.out.println("createFromString");
         String string = str.substring(1,226);
@@ -16,10 +20,23 @@ public class MapInfo {
         for(int j=0;j<15;j++){
             for (int k=0;k<15;k++){
                 map[j][k]=chars[i];
-                if(String.valueOf(chars[i]).equals("s") || String.valueOf(chars[i]).equals("w") ||
-                        String.valueOf(chars[i]).equals("a") || String.valueOf(chars[i]).equals("d")){
+                if(String.valueOf(chars[i]).equals("s")){
                     xOfLocation_x=j;yOfLocation_y=k;
+                    mCurrentDirection=1;
                 }
+                if(String.valueOf(chars[i]).equals("a")){
+                    xOfLocation_x=j;yOfLocation_y=k;
+                    mCurrentDirection=2;
+                }
+                if(String.valueOf(chars[i]).equals("d")){
+                    xOfLocation_x=j;yOfLocation_y=k;
+                    mCurrentDirection=3;
+                }
+                if(String.valueOf(chars[i]).equals("w")){
+                    xOfLocation_x=j;yOfLocation_y=k;
+                    mCurrentDirection=0;
+                }
+
                 i++;
             }
         }
@@ -56,7 +73,7 @@ public class MapInfo {
     public int getNextDirection(){
         int a,w,s,d=0;
         int[] valuesFlag=new int[4];
-        int LastDirection=2;
+        //int LastDirection=2;
         for(int i=0;i<4;i++){
             valuesFlag[i]=-1;
         }
@@ -80,54 +97,76 @@ public class MapInfo {
         }
 
 
+
         int valueTemp,flag;
         int valueTemp2,flag2;
         if(valuesFlag[0]>valuesFlag[1]){
-            valueTemp=valuesFlag[0];flag=0;
+            valueTemp=valuesFlag[0];
+            flag=0;
         }else if(valuesFlag[0]<valuesFlag[1]){
-            valueTemp=valuesFlag[1];flag=1;
-        }else {
             valueTemp=valuesFlag[1];
-            if(LastDirection==0){
+            flag=1;
+        }else {
+            if(mCurrentDirection==0){
+                valueTemp=valuesFlag[1];
                 flag=0;
-            }else if(LastDirection==1){
-                flag=1;
             }else {
+                valueTemp=valuesFlag[1];
                 flag=1;
             }
         }
+            //valueTemp=valuesFlag[1];
+//            if(LastDirection==0){
+//                flag=0;
+//            }else if(LastDirection==1){
+//                flag=1;
+//            }else {
+//                flag=1;
+//            }
+
         System.out.println("valuesFlag[0]="+valuesFlag[0]+", valuesFlag[1]="+valuesFlag[1]);
         if(valuesFlag[2]>valuesFlag[3]){
             valueTemp2=valuesFlag[2];flag2=2;
         }else if(valuesFlag[2]<valuesFlag[3]){
-            valueTemp2=valuesFlag[3];flag2=3;
+            valueTemp2 = valuesFlag[3];
+            flag2 = 3;
         }else {
-            valueTemp2=valuesFlag[3];
-            if(LastDirection==2){
+            if(mCurrentDirection==2){
+                valueTemp2 = valuesFlag[3];
                 flag2=2;
-            }else if(LastDirection==3){
-                flag2=3;
             }else {
+                valueTemp2 = valuesFlag[3];
                 flag2=3;
             }
         }
+//        }else {
+//            valueTemp2=valuesFlag[3];
+//            if(LastDirection==2){
+//                flag2=2;
+//            }else if(LastDirection==3){
+//                flag2=3;
+//            }else {
+//                flag2=3;
+//            }
+//        }
         System.out.println("valuesFlag[2]="+valuesFlag[2]+", valuesFlag[3]="+valuesFlag[3]);
         if(valueTemp>valueTemp2){
-            LastDirection=flag;
+            //LastDirection=flag;
             return flag;
-        }else if(valueTemp<valueTemp2){
-            LastDirection=flag2;
-            return flag2;
         }else {
-            if(LastDirection==flag){
-                return flag;
-            }else if(LastDirection==flag2){
-                return flag2;
-            }else {
-                LastDirection=flag;
-                return flag;
-            }
+            //LastDirection = flag2;
+            return flag2;
         }
+//        }else {
+//            if(LastDirection==flag){
+//                return flag;
+//            }else if(LastDirection==flag2){
+//                return flag2;
+//            }else {
+//                LastDirection=flag;
+//                return flag;
+//            }
+//        }
     }
 
 

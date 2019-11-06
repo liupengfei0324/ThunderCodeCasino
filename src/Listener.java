@@ -9,7 +9,7 @@ public class Listener implements Runnable{
     int VersionOfChossed = 3;
 
     static private int flag=0;
-    MapInfoV3 mapInfo;
+    MapInfo mapInfo;
 
     public Listener(Socket s){
         this.socket=s;
@@ -19,7 +19,7 @@ public class Listener implements Runnable{
             e.printStackTrace();
         }
 
-        mapInfo=new MapInfoV3();
+        mapInfo=new MapInfo();
     }
 
     public boolean isInputStreamReady(){
