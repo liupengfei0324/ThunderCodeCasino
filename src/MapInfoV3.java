@@ -1,85 +1,142 @@
-import java.util.List;
-
 public class MapInfoV3 {
 
     char[][] map = new char[15][15];
 
+    private final static int VALUEOFWALL = -1;
+    private final static int VALUEOFGHOST = -1;
+    private final static int VALUEOFOUT = -1;
     //人物在map中的当前坐标
-    int xOfLocation_x = 0;//人物在
-    int yOfLocation_y = 0;
+    int xOfLocation_x=0;//人物在
+    int yOfLocation_y=0;
 
     //当前方向 w,s,a,d 对应 0,1,2,3
     int mCurrentDirection;
 
     //视野半径
-    static int radius = 2;
-    //暂存3个鬼的位置
-    List<Ghost> ghostList;
-    //记录三个鬼距离人的xy距离
-    List<GhostDistance> ghostDistanceList;
+    static int radius=2;
 
-    public int charInMapToint(int x, int y) {
+    public int charInMapToInt(int x, int y) {
         return Integer.parseInt(String.valueOf(map[x][y]));
     }
-
-    public boolean isGost(int x, int y) {
+    public boolean isGhost(int x, int y) {
         return String.valueOf(map[xOfLocation_x - 1][yOfLocation_y + 1]).equals("G");
     }
-
-    public boolean isWall(int x, int y) {
-        return String.valueOf(map[xOfLocation_x - 1][yOfLocation_y + 1]).equals("9");
+    public boolean isWall(int x,int y){
+        return String.valueOf(map[xOfLocation_x-1][yOfLocation_y+1]).equals("9");
+    }
+    //    public int getValue(int x,int y){
+//        return Integer.parseInt(String.valueOf(map[x][y]));
+//    }
+    public int getValueOfGhost(int distance) {
+        return -100;
     }
 
-    public int getValue(int x, int y) {
-        return Integer.parseInt(String.valueOf(map[x][y]));
+    public boolean isOutOfBounds(int x, int y) {
+        if (x < 0 || x > 14 || y < 0 || y > 14) {
+            return true;
+        }
+        return false;
     }
 
     //从字符串中创建map
-    public void createFromString(String str) {
+    public void createFromString(String str){
         System.out.println("createFromString");
-        String string = str.substring(1, 226);
+        String string = str.substring(1,226);
 
         char[] chars = string.toCharArray();
         //System.out.println(chars);
-        int i = 0;
-        for (int j = 0; j < 15; j++) {
-            for (int k = 0; k < 15; k++) {
-                map[j][k] = chars[i];
-                if (String.valueOf(chars[i]).equals("s")) {
-                    xOfLocation_x = j;
-                    yOfLocation_y = k;
-                    mCurrentDirection = 1;
+        int i=0;
+        for(int j=0;j<15;j++){
+            for (int k=0;k<15;k++){
+                map[j][k]=chars[i];
+                if(String.valueOf(chars[i]).equals("s")){
+                    xOfLocation_x=j;yOfLocation_y=k;
+                    mCurrentDirection=1;
                 }
-                if (String.valueOf(chars[i]).equals("a")) {
-                    xOfLocation_x = j;
-                    yOfLocation_y = k;
-                    mCurrentDirection = 2;
+                if(String.valueOf(chars[i]).equals("a")){
+                    xOfLocation_x=j;yOfLocation_y=k;
+                    mCurrentDirection=2;
                 }
-                if (String.valueOf(chars[i]).equals("d")) {
-                    xOfLocation_x = j;
-                    yOfLocation_y = k;
-                    mCurrentDirection = 3;
+                if(String.valueOf(chars[i]).equals("d")){
+                    xOfLocation_x=j;yOfLocation_y=k;
+                    mCurrentDirection=3;
                 }
-                if (String.valueOf(chars[i]).equals("w")) {
-                    xOfLocation_x = j;
-                    yOfLocation_y = k;
-                    mCurrentDirection = 0;
+                if(String.valueOf(chars[i]).equals("w")){
+                    xOfLocation_x=j;yOfLocation_y=k;
+                    mCurrentDirection=0;
                 }
-                if (String.valueOf(chars[i]).equals("G")) {
-                    ghostList.add(new Ghost(j, k));
-                }
+
                 i++;
             }
         }
         print();
     }
 
-    public void print() {
-        for (int i = 0; i < 15; i++) {
+    public String getNextCommand() {
+
+        int direction = getNextDirection();
+        switch (direction) {
+            case 0:
+                //xOfLocation_x=xOfLocation_x-1;
+                Client.OLD_COMMAND = "[w]";
+                return "[w]";
+            case 1:
+                //xOfLocation_x=xOfLocation_x+1;
+                Client.OLD_COMMAND = "[s]";
+                return "[s]";
+            case 2:
+                //yOfLocation_y=yOfLocation_y-1;
+                Client.OLD_COMMAND = "[a]";
+                return "[a]";
+            case 3:
+                //yOfLocation_y=yOfLocation_y+1;
+                Client.OLD_COMMAND = "[d]";
+                return "[d]";
+            default:
+        }
+        return "[wait]";
+    }
+
+    public int getNextDirection() {
+        int direction = 111;
+        return direction;
+    }
+
+    private int[][] weight = new int[2 * radius + 1][2 * radius + 1];
+    //系数方阵
+    private int[][] coefficients = new int[2 * radius + 1][2 * radius + 1];
+
+
+    public void calculateWeightOfDirections(int direction) {
+        int[][] tmpMatrix = new int[2 * radius + 1][2 * radius + 1];
+        for (int i = xOfLocation_x - radius; i <= xOfLocation_x + radius; i++) {
+            for (int j = xOfLocation_x - radius; j <= xOfLocation_x + radius; j++) {
+                if (isOutOfBounds(i, j)) {
+                    tmpMatrix[i][j] = VALUEOFOUT;
+                } else if (isGhost(i, j)) {
+                    tmpMatrix[i][j] = VALUEOFGHOST;
+                } else if (isWall(i, j)) {
+                    tmpMatrix[i][j] = VALUEOFWALL;
+                } else if (i == xOfLocation_x && j == yOfLocation_y) {
+                    tmpMatrix[i][j] = 0;
+                } else {
+                    tmpMatrix[i][j] = charInMapToInt(i, j);
+                }
+            }
+        }
+        calculate(tmpMatrix);
+
+    }
+
+    public void calculate(int[][] tmpMatrix) {
+
+    }
+
+    public void print(){
+        for(int i=0;i<15;i++){
             System.out.println(String.copyValueOf(map[i]));
         }
     }
-
 
     //鬼
     class Ghost {
