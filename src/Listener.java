@@ -3,28 +3,31 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class Listener implements Runnable{
+public class Listener implements Runnable {
     Socket socket;
     InputStreamReader inputStreamReader;
-    int VersionOfChossed = 3;
+    //int VersionOfChossed = 3;
 
-    static private int flag=0;
+    static private int flag = 0;
     MapInfoBase mapInfo;
 
-    public Listener(Socket s){
-        this.socket=s;
+    public Listener(Socket s) {
+        this.socket = s;
         try {
-            this.inputStreamReader=new InputStreamReader(socket.getInputStream());
+            this.inputStreamReader = new InputStreamReader(socket.getInputStream());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        mapInfo=new MapInfoBase();
+        mapInfo = new MapInfo();
 
     }
 
-    public boolean isInputStreamReady(){
-        try{
+    /**
+     * @return
+     */
+    public boolean isInputStreamReady() {
+        try {
             return this.inputStreamReader.ready();
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,10 +39,10 @@ public class Listener implements Runnable{
     @Override
     public void run() {
         System.out.println("Listener.run");
-        int messageCount=1;
+        int messageCount = 1;
         String string;
-        while(true){
-            if(isInputStreamReady()) {
+        while (true) {
+            if (isInputStreamReady()) {
 
                 readFromStream();
                 System.out.println("Read Completed " + messageCount + " flag " + flag);
@@ -54,37 +57,37 @@ public class Listener implements Runnable{
         }
     }
 
-    public void readFromStream(){
+    public void readFromStream() {
         System.out.println("readFromStream");
-        try{
+        try {
             int ch = inputStreamReader.read();
-            StringBuffer stringBuffer=new StringBuffer();
-            char ch1 = (char)ch;
+            StringBuffer stringBuffer = new StringBuffer();
+            char ch1 = (char) ch;
             char ch2;
             stringBuffer.append(ch1);
-            switch (ch1){
-                case (char)79:
-                    ch2=(char)inputStreamReader.read();
+            switch (ch1) {
+                case (char) 79:
+                    ch2 = (char) inputStreamReader.read();
                     stringBuffer.append(ch2);
                     flag = 1;
                     break;
-                case (char)91:
-                    for(int i=0;i<=225;i++){
-                        ch2=(char)inputStreamReader.read();
+                case (char) 91:
+                    for (int i = 0; i <= 225; i++) {
+                        ch2 = (char) inputStreamReader.read();
                         stringBuffer.append(ch2);
                     }
                     flag = 2;
                     break;
                 default:
-                    while(isInputStreamReady()){
-                        stringBuffer.append((char)inputStreamReader.read());
+                    while (isInputStreamReady()) {
+                        stringBuffer.append((char) inputStreamReader.read());
                     }
                     System.exit(0);
                     flag = 3;
                     break;
             }
             System.out.println(stringBuffer.toString());
-            if(flag==2){
+            if (flag == 2) {
                 mapInfo.createFromString(stringBuffer.toString());
             }
         } catch (IOException e) {
