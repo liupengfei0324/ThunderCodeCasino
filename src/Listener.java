@@ -8,7 +8,7 @@ public class Listener implements Runnable{
     InputStreamReader inputStreamReader;
 
     static private int flag=0;
-    MapInfo mapInfo;
+    MapInfoBase mapInfo;
 
     public Listener(Socket s){
         this.socket=s;
@@ -17,7 +17,7 @@ public class Listener implements Runnable{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        mapInfo=new MapInfo();
+        mapInfo=new MapInfoBase();
     }
 
     public boolean isInputStreamReady(){
