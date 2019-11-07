@@ -18,12 +18,9 @@ public class Listener implements Runnable{
         } catch (Exception e) {
             e.printStackTrace();
         }
-<<<<<<< HEAD
-        mapInfo=new MapInfoBase();
-=======
 
-        mapInfo=new MapInfo();
->>>>>>> 2f5693df4ee65e36a6e4dff9b743140e8d336d30
+        mapInfo=new MapInfoBase();
+
     }
 
     public boolean isInputStreamReady(){

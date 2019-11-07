@@ -6,3 +6,7 @@
 /MapInfoV3$GhostDistance.class
 /MapInfoV3.class
 /MapInfoBase.class
+/MapInfoHero$Ghost.class
+/MapInfoHero$GhostDistance.class
+/MapInfoHero$GhostNextMove.class
+/MapInfoHero.class

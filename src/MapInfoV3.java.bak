@@ -1,6 +1,6 @@
 public class MapInfoV3 {
 
-<<<<<<< HEAD
+
 	char[][] map = new char[15][15];
 
 	private final static int VALUEOFWALL = -1;
@@ -272,7 +272,7 @@ public class MapInfoV3 {
 			return 0;
 		}
 	}
-=======
+
     char[][] map = new char[15][15];
 
     private final static int VALUEOFWALL = -1;
@@ -598,5 +598,5 @@ public class MapInfoV3 {
         }
         return 0;
     }
->>>>>>> 2f5693df4ee65e36a6e4dff9b743140e8d336d30
+
 }
