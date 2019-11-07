@@ -6,6 +6,7 @@ import java.net.Socket;
 public class Listener implements Runnable{
     Socket socket;
     InputStreamReader inputStreamReader;
+    int VersionOfChossed = 3;
 
     static private int flag=0;
     MapInfoBase mapInfo;
@@ -17,7 +18,12 @@ public class Listener implements Runnable{
         } catch (Exception e) {
             e.printStackTrace();
         }
+<<<<<<< HEAD
         mapInfo=new MapInfoBase();
+=======
+
+        mapInfo=new MapInfo();
+>>>>>>> 2f5693df4ee65e36a6e4dff9b743140e8d336d30
     }
 
     public boolean isInputStreamReady(){
