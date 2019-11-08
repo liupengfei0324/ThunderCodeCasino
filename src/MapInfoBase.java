@@ -8,7 +8,8 @@ public abstract class MapInfoBase {
 
     // 当前方向 w,s,a,d 对应 0,1,2,3
     int mCurrentDirection;
-
+    // 当前走了多少步
+    int mStepNum=0;
     /**
      * 地图数据转换成二维
      *
@@ -48,8 +49,15 @@ public abstract class MapInfoBase {
                 i++;
             }
         }
-        print();
-        System.out.println();
+        //当前步数是否为奇偶
+        if (mStepNum == 0) {
+            mStepNum = 1;
+        } else {
+            mStepNum = 0;
+        }
+        System.out.println("mStepNum: " + mStepNum);
+        //print();
+        //System.out.println();
         updateMap();
         print();
     }
@@ -146,7 +154,7 @@ public abstract class MapInfoBase {
         return Integer.parseInt(String.valueOf(map[x][y]));
     }
 
-    public boolean isGost(int x, int y) {
+    public boolean isGhost(int x, int y) {
         return String.valueOf(map[x][y]).equals("G");
     }
 
@@ -158,6 +166,17 @@ public abstract class MapInfoBase {
         return Integer.parseInt(String.valueOf(map[x][y]));
     }
 
+    /**
+     * 判断幽灵是否即将移动
+     * @return
+     */
+    public boolean ghostWillMove(){
+        if(mStepNum == 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
     /**
      * 坐标是否越界
      *
