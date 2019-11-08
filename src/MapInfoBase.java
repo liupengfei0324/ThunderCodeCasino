@@ -17,7 +17,7 @@ public abstract class MapInfoBase {
      * @param str 初始地图字符串
      */
     public void createFromString(String str) {
-        System.out.println("createFromString");
+//        System.out.println("createFromString");
         String string = str.substring(1, 226);
 
         char[] chars = string.toCharArray();
@@ -50,6 +50,7 @@ public abstract class MapInfoBase {
                 i++;
             }
         }
+//        print();
         //当前步数是否为奇偶
         if (mStepNum == 0) {
             mStepNum = 1;
@@ -87,9 +88,9 @@ public abstract class MapInfoBase {
                         flagOfEachNode++;
                     }
                     if (flagOfEachNode == 1) {
-                        System.out.println(map[j][k] + "--> , j=" + j + ",k=" + k + " | flagNode :" + flagOfEachNode);
+//                        System.out.println(map[j][k] + "--> , j=" + j + ",k=" + k + " | flagNode :" + flagOfEachNode);
                         map[j][k] = "9".charAt(0);
-                        System.out.println(map[j][k] + "");
+//                        System.out.println(map[j][k] + "");
                     }
                 }
 
@@ -167,6 +168,29 @@ public abstract class MapInfoBase {
         return Integer.parseInt(String.valueOf(map[x][y]));
     }
 
+    public boolean isOne(int x,int y) {
+        return String.valueOf(map[x][y]).equals("1");
+    }
+    
+    public boolean isTwo(int x,int y) {
+        return String.valueOf(map[x][y]).equals("2");
+    }
+    
+    public boolean isThree(int x,int y) {
+        return String.valueOf(map[x][y]).equals("3");
+    }
+    
+    public boolean isFour(int x,int y) {
+        return String.valueOf(map[x][y]).equals("4");
+    }
+    
+    public boolean isEmpty(int x,int y) {
+        return String.valueOf(map[x][y]).equals("0");
+    }
+    
+    public boolean isFive(int x,int y) {
+        return String.valueOf(map[x][y]).equals("5");
+    }
     /**
      * 判断幽灵是否即将移动
      *
