@@ -11,6 +11,7 @@ public class MapInfo extends MapInfoBase {
 
     /**
      * 获取下次行动的方向
+     *
      * @return
      */
     @Override
@@ -22,21 +23,47 @@ public class MapInfo extends MapInfoBase {
             valuesFlag[i] = -1000;
         }
 
-
+        //正上方
+        if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y) && isGhost(xOfLocation_x - 1, yOfLocation_y)) {
+            if ((mCurrentDirection == 1 || mCurrentDirection == 2 || mCurrentDirection ==3) && !ghostWillMove()){
+                return mCurrentDirection;
+            }
+        }
         if (xOfLocation_x - 1 >= 0 && map[xOfLocation_x - 1][yOfLocation_y] != "9".charAt(0)
                 && map[xOfLocation_x - 1][yOfLocation_y] != "G".charAt(0)) {
             w = -1;
             valuesFlag[0] = 0;
+        }
+
+        //正下方
+        if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y) && isGhost(xOfLocation_x + 1, yOfLocation_y)) {
+            if ((mCurrentDirection == 0 || mCurrentDirection == 2 || mCurrentDirection ==3) && !ghostWillMove()){
+                return mCurrentDirection;
+            }
         }
         if (xOfLocation_x + 1 <= 14 && map[xOfLocation_x + 1][yOfLocation_y] != "9".charAt(0)
                 && map[xOfLocation_x + 1][yOfLocation_y] != "G".charAt(0)) {
             s = -1;
             valuesFlag[1] = 0;
         }
+
+        //正左方
+        if (!isOutOfBounds(xOfLocation_x, yOfLocation_y - 1) && isGhost(xOfLocation_x, yOfLocation_y - 1)) {
+            if ((mCurrentDirection == 0 || mCurrentDirection == 1 || mCurrentDirection ==3) && !ghostWillMove()){
+                return mCurrentDirection;
+            }
+        }
         if (yOfLocation_y - 1 >= 0 && map[xOfLocation_x][yOfLocation_y - 1] != "9".charAt(0)
                 && map[xOfLocation_x][yOfLocation_y - 1] != "G".charAt(0)) {
             a = -1;
             valuesFlag[2] = 0;
+        }
+
+        //正右方
+        if (!isOutOfBounds(xOfLocation_x, yOfLocation_y + 1) && isGhost(xOfLocation_x, yOfLocation_y + 1)) {
+            if ((mCurrentDirection == 0 || mCurrentDirection == 1 || mCurrentDirection ==2) && !ghostWillMove()){
+                return mCurrentDirection;
+            }
         }
         if (yOfLocation_y + 1 <= 14 && map[xOfLocation_x][yOfLocation_y + 1] != "9".charAt(0)
                 && map[xOfLocation_x][yOfLocation_y + 1] != "G".charAt(0)) {
@@ -182,7 +209,7 @@ public class MapInfo extends MapInfoBase {
                 value += -1;
             }
             if (charInMapToInt(xOfLocation_x - 1, yOfLocation_y) >= 1) {
-                value += 8;
+                value += 6;//优先吃身边1,2,3
             }
             value += Integer.parseInt(String.valueOf(map[xOfLocation_x - 1][yOfLocation_y]));
         }
@@ -318,7 +345,7 @@ public class MapInfo extends MapInfoBase {
                 value += -1;
             }
             if (charInMapToInt(xOfLocation_x + 1, yOfLocation_y) >= 1) {
-                value += 8;
+                value += 6;//优先吃身边1,2,3
             }
             value += Integer.parseInt(String.valueOf(map[xOfLocation_x + 1][yOfLocation_y]));
 
@@ -450,7 +477,7 @@ public class MapInfo extends MapInfoBase {
                 value += -1;
             }
             if (charInMapToInt(xOfLocation_x, yOfLocation_y - 1) >= 1) {
-                value += 8;
+                value += 6;//优先吃身边1,2,3
             }
             value += Integer.parseInt(String.valueOf(map[xOfLocation_x][yOfLocation_y - 1]));
 
@@ -582,7 +609,7 @@ public class MapInfo extends MapInfoBase {
                 value += -1;
             }
             if (charInMapToInt(xOfLocation_x, yOfLocation_y + 1) >= 1) {
-                value += 8;
+                value += 6;//优先吃身边1,2,3
             }
             value += Integer.parseInt(String.valueOf(map[xOfLocation_x][yOfLocation_y + 1]));
 

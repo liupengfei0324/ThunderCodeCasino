@@ -8,7 +8,7 @@ public abstract class MapInfoBase {
 
     // 当前方向 w,s,a,d 对应 0,1,2,3
     int mCurrentDirection;
-    // 当前走了多少步
+    // 判断当前鬼是否移动 0:动 , 1：不动
     int mStepNum = 0;
 
     /**
