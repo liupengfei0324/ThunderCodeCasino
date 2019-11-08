@@ -11,7 +11,6 @@ public class MapInfo extends MapInfoBase {
 
     /**
      * 获取下次行动的方向
-     *
      * @return
      */
     @Override
@@ -46,7 +45,7 @@ public class MapInfo extends MapInfoBase {
         }
 
         // 幽灵在四周对角的情况规避
-        if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGhost(xOfLocation_x - 1, yOfLocation_y - 1)
+        /*if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGhost(xOfLocation_x - 1, yOfLocation_y - 1)
                 && !isOutOfBounds(xOfLocation_x + 1, yOfLocation_y + 1)
                 && isGhost(xOfLocation_x + 1, yOfLocation_y + 1)) {
             return mCurrentDirection;
@@ -55,37 +54,37 @@ public class MapInfo extends MapInfoBase {
                 && !isOutOfBounds(xOfLocation_x + 1, yOfLocation_y - 1)
                 && isGhost(xOfLocation_x + 1, yOfLocation_y - 1)) {
             return mCurrentDirection;
-        }
+        }*/
         //幽灵在四周对角点
         if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGhost(xOfLocation_x - 1, yOfLocation_y - 1)) {
-            if (mCurrentDirection == 0 || mCurrentDirection == 2) {
+            if ((mCurrentDirection == 0 || mCurrentDirection == 2) && !ghostWillMove()) {
                 return mCurrentDirection;
-            }else {
+            } else {
                 valuesFlag[0] += -500;
                 valuesFlag[2] += -500;
             }
 
         }
         if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGhost(xOfLocation_x - 1, yOfLocation_y + 1)) {
-            if (mCurrentDirection == 0 || mCurrentDirection == 3) {
+            if ((mCurrentDirection == 0 || mCurrentDirection == 3) && !ghostWillMove()) {
                 return mCurrentDirection;
-            }else {
+            } else {
                 valuesFlag[0] += -500;
                 valuesFlag[3] += -500;
             }
         }
         if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y - 1) && isGhost(xOfLocation_x + 1, yOfLocation_y - 1)) {
-            if (mCurrentDirection == 1 || mCurrentDirection == 2) {
+            if ((mCurrentDirection == 1 || mCurrentDirection == 2) && !ghostWillMove()) {
                 return mCurrentDirection;
-            }else {
+            } else {
                 valuesFlag[1] += -500;
                 valuesFlag[2] += -500;
             }
         }
         if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y + 1) && isGhost(xOfLocation_x + 1, yOfLocation_y + 1)) {
-            if (mCurrentDirection == 1 || mCurrentDirection == 3) {
+            if ((mCurrentDirection == 1 || mCurrentDirection == 3) && !ghostWillMove()) {
                 return mCurrentDirection;
-            }else {
+            } else {
                 valuesFlag[1] += -500;
                 valuesFlag[3] += -500;
             }

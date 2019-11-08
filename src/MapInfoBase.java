@@ -9,7 +9,8 @@ public abstract class MapInfoBase {
     // 当前方向 w,s,a,d 对应 0,1,2,3
     int mCurrentDirection;
     // 当前走了多少步
-    int mStepNum=0;
+    int mStepNum = 0;
+
     /**
      * 地图数据转换成二维
      *
@@ -168,15 +169,17 @@ public abstract class MapInfoBase {
 
     /**
      * 判断幽灵是否即将移动
+     *
      * @return
      */
-    public boolean ghostWillMove(){
-        if(mStepNum == 0){
+    public boolean ghostWillMove() {
+        if (mStepNum == 0) {
             return true;
         } else {
             return false;
         }
     }
+
     /**
      * 坐标是否越界
      *
