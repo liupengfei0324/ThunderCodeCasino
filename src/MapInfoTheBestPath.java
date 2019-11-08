@@ -20,17 +20,17 @@ public class MapInfoTheBestPath extends MapInfoBase {
 			valuesFruit[i] = 1;
 		}
 		for (int i = xOfLocation_x - 1; i >= -1; i--) {
-			if (!isOutOfBounds(i, yOfLocation_y) && !isWall(i, yOfLocation_y) && !isGost(i, yOfLocation_y)) {
+			if (!isOutOfBounds(i, yOfLocation_y) && !isWall(i, yOfLocation_y) && !isGhost(i, yOfLocation_y)) {
 				valuesFruit[0] += charInMapToInt(i, yOfLocation_y);
 			}
-			if (isOutOfBounds(i, yOfLocation_y) || isWall(i, yOfLocation_y) || isGost(i, yOfLocation_y)) {
+			if (isOutOfBounds(i, yOfLocation_y) || isWall(i, yOfLocation_y) || isGhost(i, yOfLocation_y)) {
 
 				valuesFlag[0] = xOfLocation_x - i - 1;// 算出上方向最近砖块离吃豆人的距离
 				break;
 			}
 			if (isOutOfBounds(i, yOfLocation_y) || isOne(i, yOfLocation_y) || isTwo(i, yOfLocation_y)
 					|| isThree(i, yOfLocation_y) || isFour(i, yOfLocation_y) || isFive(i, yOfLocation_y)
-					|| isWall(i, yOfLocation_y) || isGost(i, yOfLocation_y)) {
+					|| isWall(i, yOfLocation_y) || isGhost(i, yOfLocation_y)) {
 				isEmptyCount[0] = false;
 			}
 			if (isEmptyCount[0]&& isEmpty(i, yOfLocation_y)) {
@@ -39,17 +39,17 @@ public class MapInfoTheBestPath extends MapInfoBase {
 		}
 
 		for (int i = xOfLocation_x + 1; i <= 15; i++) {
-			if (!isOutOfBounds(i, yOfLocation_y) && !isWall(i, yOfLocation_y) && !isGost(i, yOfLocation_y)) {
+			if (!isOutOfBounds(i, yOfLocation_y) && !isWall(i, yOfLocation_y) && !isGhost(i, yOfLocation_y)) {
 				valuesFruit[1] += charInMapToInt(i, yOfLocation_y);
 			}
-			if (isOutOfBounds(i, yOfLocation_y) || isWall(i, yOfLocation_y) || isGost(i, yOfLocation_y)) {
+			if (isOutOfBounds(i, yOfLocation_y) || isWall(i, yOfLocation_y) || isGhost(i, yOfLocation_y)) {
 
 				valuesFlag[1] = i - xOfLocation_x - 1;// 算出下方向最近砖块离吃豆人的距离
 				break;
 			}
 			if (isOutOfBounds(i, yOfLocation_y) || isOne(i, yOfLocation_y) || isTwo(i, yOfLocation_y)
 					|| isThree(i, yOfLocation_y) || isFour(i, yOfLocation_y) || isFive(i, yOfLocation_y)
-					|| isWall(i, yOfLocation_y) || isGost(i, yOfLocation_y)) {
+					|| isWall(i, yOfLocation_y) || isGhost(i, yOfLocation_y)) {
 				isEmptyCount[1] = false;
 			}
 			if (isEmptyCount[1] && isEmpty(i, yOfLocation_y)) {
@@ -58,17 +58,17 @@ public class MapInfoTheBestPath extends MapInfoBase {
 		}
 
 		for (int i = yOfLocation_y - 1; i >= -1; i--) {
-			if (!isOutOfBounds(xOfLocation_x, i) && !isWall(xOfLocation_x, i) && !isGost(xOfLocation_x, i)) {
+			if (!isOutOfBounds(xOfLocation_x, i) && !isWall(xOfLocation_x, i) && !isGhost(xOfLocation_x, i)) {
 				valuesFruit[2] += charInMapToInt(xOfLocation_x, i);
 			}
-			if (isOutOfBounds(xOfLocation_x, i) || isWall(xOfLocation_x, i) || isGost(xOfLocation_x, i)) {
+			if (isOutOfBounds(xOfLocation_x, i) || isWall(xOfLocation_x, i) || isGhost(xOfLocation_x, i)) {
 
 				valuesFlag[2] = yOfLocation_y - i - 1;// 算出左方向最近砖块离吃豆人的距离
 				break;
 			}
 			if (isOutOfBounds(xOfLocation_x, i) || isOne(xOfLocation_x, i) || isTwo(xOfLocation_x, i)
 					|| isThree(xOfLocation_x, i) || isFour(xOfLocation_x, i) || isFive(xOfLocation_x, i)
-					|| isWall(xOfLocation_x, i) || isGost(xOfLocation_x, i)) {
+					|| isWall(xOfLocation_x, i) || isGhost(xOfLocation_x, i)) {
 				isEmptyCount[2] = false;
 			}
 			if (isEmptyCount[2] && isEmpty(xOfLocation_x, i)) {
@@ -77,17 +77,17 @@ public class MapInfoTheBestPath extends MapInfoBase {
 		}
 
 		for (int i = yOfLocation_y + 1; i <= 15; i++) {
-			if (!isOutOfBounds(xOfLocation_x, i) && !isWall(xOfLocation_x, i) && !isGost(xOfLocation_x, i)) {
+			if (!isOutOfBounds(xOfLocation_x, i) && !isWall(xOfLocation_x, i) && !isGhost(xOfLocation_x, i)) {
 				valuesFruit[3] += charInMapToInt(xOfLocation_x, i);
 			}
-			if (isOutOfBounds(xOfLocation_x, i) || isWall(xOfLocation_x, i) || isGost(xOfLocation_x, i)) {
+			if (isOutOfBounds(xOfLocation_x, i) || isWall(xOfLocation_x, i) || isGhost(xOfLocation_x, i)) {
 
 				valuesFlag[3] = i - yOfLocation_y - 1;// 算出右方向最近砖块离吃豆人的距离
 				break;
 			}
 			if (isOutOfBounds(xOfLocation_x, i) || isOne(xOfLocation_x, i) || isTwo(xOfLocation_x, i)
 					|| isThree(xOfLocation_x, i) || isFour(xOfLocation_x, i) || isFive(xOfLocation_x, i)
-					|| isWall(xOfLocation_x, i) || isGost(xOfLocation_x, i)) {
+					|| isWall(xOfLocation_x, i) || isGhost(xOfLocation_x, i)) {
 				isEmptyCount[3] = false;
 			}
 			if (isEmptyCount[3] && isEmpty(xOfLocation_x, i)) {
@@ -104,14 +104,14 @@ public class MapInfoTheBestPath extends MapInfoBase {
 		System.out.print("上方分值：" + valuesFruit[0] + "  " + "下方分值：" + valuesFruit[1] + "\n");
 		System.out.print("左方分值：" + valuesFruit[2] + "  " + "右方分值：" + valuesFruit[3] + "\n");
 
-		if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGost(xOfLocation_x - 1, yOfLocation_y - 1)
+		if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGhost(xOfLocation_x - 1, yOfLocation_y - 1)
 				&& !isOutOfBounds(xOfLocation_x + 1, yOfLocation_y + 1)
-				&& isGost(xOfLocation_x + 1, yOfLocation_y + 1)) {
+				&& isGhost(xOfLocation_x + 1, yOfLocation_y + 1)) {
 			return mCurrentDirection;
 		}
-		if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGost(xOfLocation_x - 1, yOfLocation_y + 1)
+		if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGhost(xOfLocation_x - 1, yOfLocation_y + 1)
 				&& !isOutOfBounds(xOfLocation_x + 1, yOfLocation_y - 1)
-				&& isGost(xOfLocation_x + 1, yOfLocation_y - 1)) {
+				&& isGhost(xOfLocation_x + 1, yOfLocation_y - 1)) {
 			return mCurrentDirection;
 		}
 
@@ -149,32 +149,32 @@ public class MapInfoTheBestPath extends MapInfoBase {
 			temp3 = valueFlag[3];
 		}
 
-		if (temp0 == 0 && (!isOutOfBounds(xOfLocation_x, yOfLocation_y-1)&&(isGost(xOfLocation_x, yOfLocation_y-1))||
-				(!isOutOfBounds(xOfLocation_x, yOfLocation_y+1)&&(isGost(xOfLocation_x, yOfLocation_y+1))
-						||(!isOutOfBounds(xOfLocation_x-1, yOfLocation_y)&&(isGost(xOfLocation_x-1, yOfLocation_y))
-								||(!isOutOfBounds(xOfLocation_x+1, yOfLocation_y)&&(isGost(xOfLocation_x+1, yOfLocation_y))))))) {
+		if (temp0 == 0 && (!isOutOfBounds(xOfLocation_x, yOfLocation_y-1)&&(isGhost(xOfLocation_x, yOfLocation_y-1))||
+				(!isOutOfBounds(xOfLocation_x, yOfLocation_y+1)&&(isGhost(xOfLocation_x, yOfLocation_y+1))
+						||(!isOutOfBounds(xOfLocation_x-1, yOfLocation_y)&&(isGhost(xOfLocation_x-1, yOfLocation_y))
+								||(!isOutOfBounds(xOfLocation_x+1, yOfLocation_y)&&(isGhost(xOfLocation_x+1, yOfLocation_y))))))) {
 			return mCurrentDirection;
 		}
-		if (temp1 == 0 && (!isOutOfBounds(xOfLocation_x, yOfLocation_y-1)&&(isGost(xOfLocation_x, yOfLocation_y-1))||
-				(!isOutOfBounds(xOfLocation_x, yOfLocation_y+1)&&(isGost(xOfLocation_x, yOfLocation_y+1))
-						||(!isOutOfBounds(xOfLocation_x-1, yOfLocation_y)&&(isGost(xOfLocation_x-1, yOfLocation_y))
-								||(!isOutOfBounds(xOfLocation_x+1, yOfLocation_y)&&(isGost(xOfLocation_x+1, yOfLocation_y))))))) {
+		if (temp1 == 0 && (!isOutOfBounds(xOfLocation_x, yOfLocation_y-1)&&(isGhost(xOfLocation_x, yOfLocation_y-1))||
+				(!isOutOfBounds(xOfLocation_x, yOfLocation_y+1)&&(isGhost(xOfLocation_x, yOfLocation_y+1))
+						||(!isOutOfBounds(xOfLocation_x-1, yOfLocation_y)&&(isGhost(xOfLocation_x-1, yOfLocation_y))
+								||(!isOutOfBounds(xOfLocation_x+1, yOfLocation_y)&&(isGhost(xOfLocation_x+1, yOfLocation_y))))))) {
 			return mCurrentDirection;
 		}
-		if (temp2 == 0 && (!isOutOfBounds(xOfLocation_x, yOfLocation_y-1)&&(isGost(xOfLocation_x, yOfLocation_y-1))||
-				(!isOutOfBounds(xOfLocation_x, yOfLocation_y+1)&&(isGost(xOfLocation_x, yOfLocation_y+1))
-						||(!isOutOfBounds(xOfLocation_x-1, yOfLocation_y)&&(isGost(xOfLocation_x-1, yOfLocation_y))
-								||(!isOutOfBounds(xOfLocation_x+1, yOfLocation_y)&&(isGost(xOfLocation_x+1, yOfLocation_y))))))) {
+		if (temp2 == 0 && (!isOutOfBounds(xOfLocation_x, yOfLocation_y-1)&&(isGhost(xOfLocation_x, yOfLocation_y-1))||
+				(!isOutOfBounds(xOfLocation_x, yOfLocation_y+1)&&(isGhost(xOfLocation_x, yOfLocation_y+1))
+						||(!isOutOfBounds(xOfLocation_x-1, yOfLocation_y)&&(isGhost(xOfLocation_x-1, yOfLocation_y))
+								||(!isOutOfBounds(xOfLocation_x+1, yOfLocation_y)&&(isGhost(xOfLocation_x+1, yOfLocation_y))))))) {
 			return mCurrentDirection;
 		}
-		if (temp3 == 0 && (!isOutOfBounds(xOfLocation_x, yOfLocation_y-1)&&(isGost(xOfLocation_x, yOfLocation_y-1))||
-				(!isOutOfBounds(xOfLocation_x, yOfLocation_y+1)&&(isGost(xOfLocation_x, yOfLocation_y+1))
-						||(!isOutOfBounds(xOfLocation_x-1, yOfLocation_y)&&(isGost(xOfLocation_x-1, yOfLocation_y))
-								||(!isOutOfBounds(xOfLocation_x+1, yOfLocation_y)&&(isGost(xOfLocation_x+1, yOfLocation_y))))))) {
+		if (temp3 == 0 && (!isOutOfBounds(xOfLocation_x, yOfLocation_y-1)&&(isGhost(xOfLocation_x, yOfLocation_y-1))||
+				(!isOutOfBounds(xOfLocation_x, yOfLocation_y+1)&&(isGhost(xOfLocation_x, yOfLocation_y+1))
+						||(!isOutOfBounds(xOfLocation_x-1, yOfLocation_y)&&(isGhost(xOfLocation_x-1, yOfLocation_y))
+								||(!isOutOfBounds(xOfLocation_x+1, yOfLocation_y)&&(isGhost(xOfLocation_x+1, yOfLocation_y))))))) {
 			return mCurrentDirection;
 		}
 		if (temp0 > temp1 && temp0 > temp2 && temp0 > temp3) {// 上方向距离最大
-			if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGost(xOfLocation_x - 1, yOfLocation_y - 1)) {
+			if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGhost(xOfLocation_x - 1, yOfLocation_y - 1)) {
 				if (mCurrentDirection == 0 || mCurrentDirection == 2) {
 					return mCurrentDirection;
 				} else {
@@ -185,7 +185,7 @@ public class MapInfoTheBestPath extends MapInfoBase {
 					}
 				}
 			}
-			if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGost(xOfLocation_x - 1, yOfLocation_y + 1)) {
+			if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGhost(xOfLocation_x - 1, yOfLocation_y + 1)) {
 				if (mCurrentDirection == 0 || mCurrentDirection == 3) {
 					return mCurrentDirection;
 				} else {
@@ -197,7 +197,7 @@ public class MapInfoTheBestPath extends MapInfoBase {
 				}
 			}
 			else {
-				if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGost(xOfLocation_x - 1, yOfLocation_y - 1) && !isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGost(xOfLocation_x - 1, yOfLocation_y + 1)) {
+				if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGhost(xOfLocation_x - 1, yOfLocation_y - 1) && !isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGhost(xOfLocation_x - 1, yOfLocation_y + 1)) {
 					return mCurrentDirection;
 				}else {
 					return 0;
@@ -206,7 +206,7 @@ public class MapInfoTheBestPath extends MapInfoBase {
 		}
 
 		else if (temp1 > temp0 && temp1 > temp2 && temp1 > temp3) {// 下方向距离最大
-			if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y - 1) && isGost(xOfLocation_x + 1, yOfLocation_y - 1)) {
+			if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y - 1) && isGhost(xOfLocation_x + 1, yOfLocation_y - 1)) {
 				if (mCurrentDirection == 1 || mCurrentDirection == 2) {
 					return mCurrentDirection;
 				} else {
@@ -217,7 +217,7 @@ public class MapInfoTheBestPath extends MapInfoBase {
 					}
 				}
 			}
-			if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y + 1) && isGost(xOfLocation_x + 1, yOfLocation_y + 1)) {
+			if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y + 1) && isGhost(xOfLocation_x + 1, yOfLocation_y + 1)) {
 				if (mCurrentDirection == 1 || mCurrentDirection == 3) {
 					return mCurrentDirection;
 				} else {
@@ -229,7 +229,7 @@ public class MapInfoTheBestPath extends MapInfoBase {
 				}
 			}
 			else {
-				if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y - 1) && isGost(xOfLocation_x + 1, yOfLocation_y - 1) && !isOutOfBounds(xOfLocation_x + 1, yOfLocation_y + 1) && isGost(xOfLocation_x + 1, yOfLocation_y + 1)) {
+				if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y - 1) && isGhost(xOfLocation_x + 1, yOfLocation_y - 1) && !isOutOfBounds(xOfLocation_x + 1, yOfLocation_y + 1) && isGhost(xOfLocation_x + 1, yOfLocation_y + 1)) {
 					return mCurrentDirection;
 				}else {
 					return 1;
@@ -238,7 +238,7 @@ public class MapInfoTheBestPath extends MapInfoBase {
 		}
 
 		else if (temp2 > temp0 && temp2 > temp1 && temp2 > temp3) {// 左方向距离最大
-			if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGost(xOfLocation_x - 1, yOfLocation_y - 1)) {
+			if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGhost(xOfLocation_x - 1, yOfLocation_y - 1)) {
 				if (mCurrentDirection == 0 || mCurrentDirection == 2) {
 					return mCurrentDirection;
 				} else {
@@ -249,7 +249,7 @@ public class MapInfoTheBestPath extends MapInfoBase {
 					}
 				}
 			} else if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y - 1)
-					&& isGost(xOfLocation_x + 1, yOfLocation_y - 1)) {
+					&& isGhost(xOfLocation_x + 1, yOfLocation_y - 1)) {
 				if (mCurrentDirection == 1 || mCurrentDirection == 2) {
 					return mCurrentDirection;
 				} else {
@@ -260,8 +260,8 @@ public class MapInfoTheBestPath extends MapInfoBase {
 					}
 				}
 			} else {
-				if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGost(xOfLocation_x - 1, yOfLocation_y - 1) && !isOutOfBounds(xOfLocation_x + 1, yOfLocation_y - 1)
-						&& isGost(xOfLocation_x + 1, yOfLocation_y - 1)) {
+				if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGhost(xOfLocation_x - 1, yOfLocation_y - 1) && !isOutOfBounds(xOfLocation_x + 1, yOfLocation_y - 1)
+						&& isGhost(xOfLocation_x + 1, yOfLocation_y - 1)) {
 					return mCurrentDirection;
 				}else {
 					return 2;
@@ -270,7 +270,7 @@ public class MapInfoTheBestPath extends MapInfoBase {
 		}
 
 		else if (temp3 > temp0 && temp3 > temp1 && temp3 > temp2) {// 右方向距离最大
-			if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGost(xOfLocation_x - 1, yOfLocation_y + 1)) {
+			if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGhost(xOfLocation_x - 1, yOfLocation_y + 1)) {
 				if (mCurrentDirection == 0 || mCurrentDirection == 3) {
 					return mCurrentDirection;
 				} else {
@@ -281,7 +281,7 @@ public class MapInfoTheBestPath extends MapInfoBase {
 					}
 				}
 			} else if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y + 1)
-					&& isGost(xOfLocation_x + 1, yOfLocation_y + 1)) {
+					&& isGhost(xOfLocation_x + 1, yOfLocation_y + 1)) {
 				if (mCurrentDirection == 1 || mCurrentDirection == 3) {
 					return mCurrentDirection;
 				} else {
@@ -292,9 +292,9 @@ public class MapInfoTheBestPath extends MapInfoBase {
 					}
 				}
 			} else {
-				if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGost(xOfLocation_x - 1, yOfLocation_y + 1)
+				if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGhost(xOfLocation_x - 1, yOfLocation_y + 1)
 						&& !isOutOfBounds(xOfLocation_x + 1, yOfLocation_y + 1)
-						&& isGost(xOfLocation_x + 1, yOfLocation_y + 1)) {
+						&& isGhost(xOfLocation_x + 1, yOfLocation_y + 1)) {
 					return mCurrentDirection;
 				} else {
 					return 3;
