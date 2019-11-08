@@ -1,9 +1,9 @@
 public class MapInfo extends MapInfoBase {
 
     //幽灵危险等级，从高到低：1——>3
-    private final int GHOST_1 = -25;
-    private final int GHOST_2 = -16;
-    private final int GHOST_3 = -10;
+    private final int GHOST_1 = -23;
+    private final int GHOST_2 = -15;
+    private final int GHOST_3 = -9;
 
     //墙的危险等级，从高到低：1——>2
     private final int WALL_1 = -4;
@@ -46,31 +46,49 @@ public class MapInfo extends MapInfoBase {
         }
 
         // 幽灵在四周对角的情况规避
-        if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGost(xOfLocation_x - 1, yOfLocation_y - 1)) {
-            valuesFlag[0] += -500;
-            valuesFlag[2] += -500;
-        }
-        if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGost(xOfLocation_x - 1, yOfLocation_y + 1)) {
-            valuesFlag[0] += -500;
-            valuesFlag[3] += -500;
-        }
-        if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y - 1) && isGost(xOfLocation_x + 1, yOfLocation_y - 1)) {
-            valuesFlag[1] += -500;
-            valuesFlag[2] += -500;
-        }
-        if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y + 1) && isGost(xOfLocation_x + 1, yOfLocation_y + 1)) {
-            valuesFlag[3] += -500;
-            valuesFlag[1] += -500;
-        }
-        if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGost(xOfLocation_x - 1, yOfLocation_y - 1)
+        if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGhost(xOfLocation_x - 1, yOfLocation_y - 1)
                 && !isOutOfBounds(xOfLocation_x + 1, yOfLocation_y + 1)
-                && isGost(xOfLocation_x + 1, yOfLocation_y + 1)) {
+                && isGhost(xOfLocation_x + 1, yOfLocation_y + 1)) {
             return mCurrentDirection;
         }
-        if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGost(xOfLocation_x - 1, yOfLocation_y + 1)
+        if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGhost(xOfLocation_x - 1, yOfLocation_y + 1)
                 && !isOutOfBounds(xOfLocation_x + 1, yOfLocation_y - 1)
-                && isGost(xOfLocation_x + 1, yOfLocation_y - 1)) {
+                && isGhost(xOfLocation_x + 1, yOfLocation_y - 1)) {
             return mCurrentDirection;
+        }
+        //幽灵在四周对角点
+        if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGhost(xOfLocation_x - 1, yOfLocation_y - 1)) {
+            if (mCurrentDirection == 0 || mCurrentDirection == 2) {
+                return mCurrentDirection;
+            }else {
+                valuesFlag[0] += -500;
+                valuesFlag[2] += -500;
+            }
+
+        }
+        if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGhost(xOfLocation_x - 1, yOfLocation_y + 1)) {
+            if (mCurrentDirection == 0 || mCurrentDirection == 3) {
+                return mCurrentDirection;
+            }else {
+                valuesFlag[0] += -500;
+                valuesFlag[3] += -500;
+            }
+        }
+        if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y - 1) && isGhost(xOfLocation_x + 1, yOfLocation_y - 1)) {
+            if (mCurrentDirection == 1 || mCurrentDirection == 2) {
+                return mCurrentDirection;
+            }else {
+                valuesFlag[1] += -500;
+                valuesFlag[2] += -500;
+            }
+        }
+        if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y + 1) && isGhost(xOfLocation_x + 1, yOfLocation_y + 1)) {
+            if (mCurrentDirection == 1 || mCurrentDirection == 3) {
+                return mCurrentDirection;
+            }else {
+                valuesFlag[1] += -500;
+                valuesFlag[3] += -500;
+            }
         }
 
         for (int i = 0; i < 4; i++) {
@@ -188,10 +206,10 @@ public class MapInfo extends MapInfoBase {
         if (yOfLocation_y - 2 >= 0 && isWall(xOfLocation_x - 1, yOfLocation_y - 2)) {
             value += WALL_1;
         }
-        if (yOfLocation_y - 2 >= 0 && isGost(xOfLocation_x - 1, yOfLocation_y - 2)) {
+        if (yOfLocation_y - 2 >= 0 && isGhost(xOfLocation_x - 1, yOfLocation_y - 2)) {
             value += GHOST_2;
         }
-        if (yOfLocation_y - 2 >= 0 && !isGost(xOfLocation_x - 1, yOfLocation_y - 2)) {
+        if (yOfLocation_y - 2 >= 0 && !isGhost(xOfLocation_x - 1, yOfLocation_y - 2)) {
             if (9 > charInMapToInt(xOfLocation_x - 1, yOfLocation_y - 2)
                     && charInMapToInt(xOfLocation_x - 1, yOfLocation_y - 2) >= 0) {
                 value += charInMapToInt(xOfLocation_x - 1, yOfLocation_y - 2);
@@ -202,10 +220,10 @@ public class MapInfo extends MapInfoBase {
         if (xOfLocation_x - 2 >= 0 && yOfLocation_y - 1 >= 0 && isWall(xOfLocation_x - 2, yOfLocation_y - 1)) {
             value += WALL_1;
         }
-        if (xOfLocation_x - 2 >= 0 && yOfLocation_y - 1 >= 0 && isGost(xOfLocation_x - 2, yOfLocation_y - 1)) {
+        if (xOfLocation_x - 2 >= 0 && yOfLocation_y - 1 >= 0 && isGhost(xOfLocation_x - 2, yOfLocation_y - 1)) {
             value += GHOST_2;
         }
-        if (xOfLocation_x - 2 >= 0 && yOfLocation_y - 1 >= 0 && !isGost(xOfLocation_x - 2, yOfLocation_y - 1)) {
+        if (xOfLocation_x - 2 >= 0 && yOfLocation_y - 1 >= 0 && !isGhost(xOfLocation_x - 2, yOfLocation_y - 1)) {
             if (9 > charInMapToInt(xOfLocation_x - 2, yOfLocation_y - 1)
                     && charInMapToInt(xOfLocation_x - 2, yOfLocation_y - 1) >= 0) {
                 value += charInMapToInt(xOfLocation_x - 2, yOfLocation_y - 1);
@@ -213,10 +231,10 @@ public class MapInfo extends MapInfoBase {
         }
 
         // (x-3,y)
-        if (xOfLocation_x - 3 >= 0 && yOfLocation_y >= 0 && isGost(xOfLocation_x - 3, yOfLocation_y)) {
+        if (xOfLocation_x - 3 >= 0 && yOfLocation_y >= 0 && isGhost(xOfLocation_x - 3, yOfLocation_y)) {
             value += GHOST_3;
         }
-        if (xOfLocation_x - 3 >= 0 && yOfLocation_y >= 0 && !isGost(xOfLocation_x - 3, yOfLocation_y)) {
+        if (xOfLocation_x - 3 >= 0 && yOfLocation_y >= 0 && !isGhost(xOfLocation_x - 3, yOfLocation_y)) {
             if (9 > charInMapToInt(xOfLocation_x - 3, yOfLocation_y)
                     && charInMapToInt(xOfLocation_x - 3, yOfLocation_y) >= 0) {
                 value += charInMapToInt(xOfLocation_x - 3, yOfLocation_y);
@@ -227,10 +245,10 @@ public class MapInfo extends MapInfoBase {
         if (xOfLocation_x - 2 >= 0 && yOfLocation_y + 1 <= 14 && isWall(xOfLocation_x - 2, yOfLocation_y + 1)) {
             value += WALL_1;
         }
-        if (xOfLocation_x - 2 >= 0 && yOfLocation_y + 1 <= 14 && isGost(xOfLocation_x - 2, yOfLocation_y + 1)) {
+        if (xOfLocation_x - 2 >= 0 && yOfLocation_y + 1 <= 14 && isGhost(xOfLocation_x - 2, yOfLocation_y + 1)) {
             value += GHOST_2;
         }
-        if (xOfLocation_x - 2 >= 0 && yOfLocation_y + 1 <= 14 && !isGost(xOfLocation_x - 2, yOfLocation_y + 1)) {
+        if (xOfLocation_x - 2 >= 0 && yOfLocation_y + 1 <= 14 && !isGhost(xOfLocation_x - 2, yOfLocation_y + 1)) {
             if (9 > charInMapToInt(xOfLocation_x - 2, yOfLocation_y + 1)
                     && charInMapToInt(xOfLocation_x - 2, yOfLocation_y + 1) >= 0) {
                 value += charInMapToInt(xOfLocation_x - 2, yOfLocation_y + 1);
@@ -238,10 +256,10 @@ public class MapInfo extends MapInfoBase {
         }
 
         // (x-1,y+2)
-        if (xOfLocation_x - 1 >= 0 && yOfLocation_y + 2 <= 14 && isGost(xOfLocation_x - 1, yOfLocation_y + 2)) {
+        if (xOfLocation_x - 1 >= 0 && yOfLocation_y + 2 <= 14 && isGhost(xOfLocation_x - 1, yOfLocation_y + 2)) {
             value += GHOST_2;
         }
-        if (xOfLocation_x - 1 >= 0 && yOfLocation_y + 2 <= 14 && !isGost(xOfLocation_x - 1, yOfLocation_y + 2)) {
+        if (xOfLocation_x - 1 >= 0 && yOfLocation_y + 2 <= 14 && !isGhost(xOfLocation_x - 1, yOfLocation_y + 2)) {
             if (9 > charInMapToInt(xOfLocation_x - 1, yOfLocation_y + 2)
                     && charInMapToInt(xOfLocation_x - 1, yOfLocation_y + 2) >= 0) {
                 value += charInMapToInt(xOfLocation_x - 1, yOfLocation_y + 2);
@@ -364,10 +382,10 @@ public class MapInfo extends MapInfoBase {
         if (xOfLocation_x + 1 <= 14 && yOfLocation_y - 2 >= 0 && isWall(xOfLocation_x + 1, yOfLocation_y - 2)) {
             value += WALL_1;
         }
-        if (xOfLocation_x + 1 <= 14 && yOfLocation_y - 2 >= 0 && isGost(xOfLocation_x + 1, yOfLocation_y - 2)) {
+        if (xOfLocation_x + 1 <= 14 && yOfLocation_y - 2 >= 0 && isGhost(xOfLocation_x + 1, yOfLocation_y - 2)) {
             value += GHOST_2;
         }
-        if (xOfLocation_x + 1 >= 0 && yOfLocation_y - 2 >= 0 && !isGost(xOfLocation_x + 1, yOfLocation_y - 2)) {
+        if (xOfLocation_x + 1 >= 0 && yOfLocation_y - 2 >= 0 && !isGhost(xOfLocation_x + 1, yOfLocation_y - 2)) {
             if (9 > charInMapToInt(xOfLocation_x + 1, yOfLocation_y - 2)
                     && charInMapToInt(xOfLocation_x + 1, yOfLocation_y - 2) >= 0) {
                 value += charInMapToInt(xOfLocation_x + 1, yOfLocation_y - 2);
@@ -375,10 +393,10 @@ public class MapInfo extends MapInfoBase {
         }
 
         // (x+2,y-1)
-        if (xOfLocation_x + 2 <= 14 && yOfLocation_y - 1 >= 0 && isGost(xOfLocation_x + 2, yOfLocation_y - 1)) {
+        if (xOfLocation_x + 2 <= 14 && yOfLocation_y - 1 >= 0 && isGhost(xOfLocation_x + 2, yOfLocation_y - 1)) {
             value += GHOST_2;
         }
-        if (xOfLocation_x + 2 <= 14 && yOfLocation_y - 1 >= 0 && !isGost(xOfLocation_x + 2, yOfLocation_y - 1)) {
+        if (xOfLocation_x + 2 <= 14 && yOfLocation_y - 1 >= 0 && !isGhost(xOfLocation_x + 2, yOfLocation_y - 1)) {
             if (9 > charInMapToInt(xOfLocation_x + 2, yOfLocation_y - 1)
                     && charInMapToInt(xOfLocation_x + 2, yOfLocation_y - 1) >= 0) {
                 value += charInMapToInt(xOfLocation_x + 2, yOfLocation_y - 1);
@@ -386,10 +404,10 @@ public class MapInfo extends MapInfoBase {
         }
 
         // (x+4,y)
-//					if (xOfLocation_x + 4 <= 14 && yOfLocation_y >= 0 && isGost(xOfLocation_x + 4, yOfLocation_y)) {
+//					if (xOfLocation_x + 4 <= 14 && yOfLocation_y >= 0 && isGhost(xOfLocation_x + 4, yOfLocation_y)) {
 //						value += -6;
 //					}
-        if (xOfLocation_x + 4 <= 14 && yOfLocation_y >= 0 && !isGost(xOfLocation_x + 4, yOfLocation_y)) {
+        if (xOfLocation_x + 4 <= 14 && yOfLocation_y >= 0 && !isGhost(xOfLocation_x + 4, yOfLocation_y)) {
             if (9 > charInMapToInt(xOfLocation_x + 4, yOfLocation_y)
                     && charInMapToInt(xOfLocation_x + 4, yOfLocation_y) >= 0) {
                 value += charInMapToInt(xOfLocation_x + 4, yOfLocation_y);
@@ -400,10 +418,10 @@ public class MapInfo extends MapInfoBase {
         if (xOfLocation_x + 2 <= 14 && yOfLocation_y + 1 <= 14 && isWall(xOfLocation_x + 2, yOfLocation_y + 1)) {
             value += WALL_1;
         }
-        if (xOfLocation_x + 2 <= 14 && yOfLocation_y + 1 <= 14 && isGost(xOfLocation_x + 2, yOfLocation_y + 1)) {
+        if (xOfLocation_x + 2 <= 14 && yOfLocation_y + 1 <= 14 && isGhost(xOfLocation_x + 2, yOfLocation_y + 1)) {
             value += GHOST_2;
         }
-        if (xOfLocation_x + 2 <= 14 && yOfLocation_y + 1 <= 14 && !isGost(xOfLocation_x + 2, yOfLocation_y + 1)) {
+        if (xOfLocation_x + 2 <= 14 && yOfLocation_y + 1 <= 14 && !isGhost(xOfLocation_x + 2, yOfLocation_y + 1)) {
             if (9 > charInMapToInt(xOfLocation_x + 2, yOfLocation_y + 1)
                     && charInMapToInt(xOfLocation_x + 2, yOfLocation_y + 1) >= 0) {
                 value += charInMapToInt(xOfLocation_x + 2, yOfLocation_y + 1);
@@ -411,10 +429,10 @@ public class MapInfo extends MapInfoBase {
         }
 
         // (x+1,y+2)
-        if (xOfLocation_x + 1 <= 14 && yOfLocation_y + 2 <= 14 && isGost(xOfLocation_x + 1, yOfLocation_y + 2)) {
+        if (xOfLocation_x + 1 <= 14 && yOfLocation_y + 2 <= 14 && isGhost(xOfLocation_x + 1, yOfLocation_y + 2)) {
             value += GHOST_2;
         }
-        if (xOfLocation_x + 1 <= 14 && yOfLocation_y + 2 <= 14 && !isGost(xOfLocation_x + 1, yOfLocation_y + 2)) {
+        if (xOfLocation_x + 1 <= 14 && yOfLocation_y + 2 <= 14 && !isGhost(xOfLocation_x + 1, yOfLocation_y + 2)) {
             if (9 > charInMapToInt(xOfLocation_x + 1, yOfLocation_y + 2)
                     && charInMapToInt(xOfLocation_x + 1, yOfLocation_y + 2) >= 0) {
                 value += charInMapToInt(xOfLocation_x + 1, yOfLocation_y + 2);
@@ -493,10 +511,10 @@ public class MapInfo extends MapInfoBase {
         }
 
         // (x+2,y-1)
-        if (xOfLocation_x + 2 <= 14 && yOfLocation_y - 1 >= 0 && isGost(xOfLocation_x + 2, yOfLocation_y - 1)) {
+        if (xOfLocation_x + 2 <= 14 && yOfLocation_y - 1 >= 0 && isGhost(xOfLocation_x + 2, yOfLocation_y - 1)) {
             value += GHOST_2;
         }
-        if (xOfLocation_x + 2 <= 14 && yOfLocation_y - 1 >= 0 && !isGost(xOfLocation_x + 2, yOfLocation_y - 1)) {
+        if (xOfLocation_x + 2 <= 14 && yOfLocation_y - 1 >= 0 && !isGhost(xOfLocation_x + 2, yOfLocation_y - 1)) {
             if (9 > charInMapToInt(xOfLocation_x + 2, yOfLocation_y - 1)
                     && charInMapToInt(xOfLocation_x + 2, yOfLocation_y - 1) >= 0) {
                 value += charInMapToInt(xOfLocation_x + 2, yOfLocation_y - 1);
@@ -507,10 +525,10 @@ public class MapInfo extends MapInfoBase {
         if (xOfLocation_x + 1 <= 14 && yOfLocation_y - 2 >= 0 && isWall(xOfLocation_x + 1, yOfLocation_y - 2)) {
             value += WALL_1;
         }
-        if (xOfLocation_x + 1 <= 14 && yOfLocation_y - 2 >= 0 && isGost(xOfLocation_x + 1, yOfLocation_y - 2)) {
+        if (xOfLocation_x + 1 <= 14 && yOfLocation_y - 2 >= 0 && isGhost(xOfLocation_x + 1, yOfLocation_y - 2)) {
             value += GHOST_2;
         }
-        if (xOfLocation_x + 1 <= 14 && yOfLocation_y - 2 >= 0 && !isGost(xOfLocation_x + 1, yOfLocation_y - 2)) {
+        if (xOfLocation_x + 1 <= 14 && yOfLocation_y - 2 >= 0 && !isGhost(xOfLocation_x + 1, yOfLocation_y - 2)) {
             if (9 > charInMapToInt(xOfLocation_x + 1, yOfLocation_y - 2)
                     && charInMapToInt(xOfLocation_x + 1, yOfLocation_y - 2) >= 0) {
                 value += charInMapToInt(xOfLocation_x + 1, yOfLocation_y - 2);
@@ -518,10 +536,10 @@ public class MapInfo extends MapInfoBase {
         }
 
         // (x,y-4)
-//					if (xOfLocation_x >= 0 && yOfLocation_y - 4 >= 0 && isGost(xOfLocation_x, yOfLocation_y - 4)) {
+//					if (xOfLocation_x >= 0 && yOfLocation_y - 4 >= 0 && isGhost(xOfLocation_x, yOfLocation_y - 4)) {
 //						value += -6;
 //					}
-        if (xOfLocation_x >= 0 && yOfLocation_y - 4 >= 0 && !isGost(xOfLocation_x, yOfLocation_y - 4)) {
+        if (xOfLocation_x >= 0 && yOfLocation_y - 4 >= 0 && !isGhost(xOfLocation_x, yOfLocation_y - 4)) {
             if (9 > charInMapToInt(xOfLocation_x, yOfLocation_y - 4)
                     && charInMapToInt(xOfLocation_x, yOfLocation_y - 4) >= 0) {
                 value += charInMapToInt(xOfLocation_x, yOfLocation_y - 4);
@@ -532,10 +550,10 @@ public class MapInfo extends MapInfoBase {
         if (yOfLocation_y - 2 >= 0 && xOfLocation_x - 1 >= 0 && isWall(xOfLocation_x - 1, yOfLocation_y - 2)) {
             value += WALL_1;
         }
-        if (yOfLocation_y - 2 >= 0 && xOfLocation_x - 1 >= 0 && isGost(xOfLocation_x - 1, yOfLocation_y - 2)) {
+        if (yOfLocation_y - 2 >= 0 && xOfLocation_x - 1 >= 0 && isGhost(xOfLocation_x - 1, yOfLocation_y - 2)) {
             value += GHOST_2;
         }
-        if (yOfLocation_y - 2 >= 0 && xOfLocation_x - 1 >= 0 && !isGost(xOfLocation_x - 1, yOfLocation_y - 2)) {
+        if (yOfLocation_y - 2 >= 0 && xOfLocation_x - 1 >= 0 && !isGhost(xOfLocation_x - 1, yOfLocation_y - 2)) {
             if (9 > charInMapToInt(xOfLocation_x - 1, yOfLocation_y - 2)
                     && charInMapToInt(xOfLocation_x - 1, yOfLocation_y - 2) >= 0) {
                 value += charInMapToInt(xOfLocation_x - 1, yOfLocation_y - 2);
@@ -543,10 +561,10 @@ public class MapInfo extends MapInfoBase {
         }
 
         // (x-2,y-1)
-        if (xOfLocation_x - 2 >= 0 && yOfLocation_y - 1 >= 0 && isGost(xOfLocation_x - 2, yOfLocation_y - 1)) {
+        if (xOfLocation_x - 2 >= 0 && yOfLocation_y - 1 >= 0 && isGhost(xOfLocation_x - 2, yOfLocation_y - 1)) {
             value += GHOST_2;
         }
-        if (xOfLocation_x - 2 >= 0 && yOfLocation_y - 1 >= 0 && !isGost(xOfLocation_x - 2, yOfLocation_y - 1)) {
+        if (xOfLocation_x - 2 >= 0 && yOfLocation_y - 1 >= 0 && !isGhost(xOfLocation_x - 2, yOfLocation_y - 1)) {
             if (9 > charInMapToInt(xOfLocation_x - 2, yOfLocation_y - 1)
                     && charInMapToInt(xOfLocation_x - 2, yOfLocation_y - 1) >= 0) {
                 value += charInMapToInt(xOfLocation_x - 2, yOfLocation_y - 1);
@@ -625,10 +643,10 @@ public class MapInfo extends MapInfoBase {
         }
 
         // (x-2,y+1)
-        if (xOfLocation_x - 2 >= 0 && yOfLocation_y + 1 <= 14 && isGost(xOfLocation_x - 2, yOfLocation_y + 1)) {
+        if (xOfLocation_x - 2 >= 0 && yOfLocation_y + 1 <= 14 && isGhost(xOfLocation_x - 2, yOfLocation_y + 1)) {
             value += GHOST_2;
         }
-        if (xOfLocation_x - 2 >= 0 && yOfLocation_y + 1 <= 14 && !isGost(xOfLocation_x - 2, yOfLocation_y + 1)) {
+        if (xOfLocation_x - 2 >= 0 && yOfLocation_y + 1 <= 14 && !isGhost(xOfLocation_x - 2, yOfLocation_y + 1)) {
             if (9 > charInMapToInt(xOfLocation_x - 2, yOfLocation_y + 1)
                     && charInMapToInt(xOfLocation_x - 2, yOfLocation_y + 1) >= 0) {
                 value += charInMapToInt(xOfLocation_x - 2, yOfLocation_y + 1);
@@ -639,10 +657,10 @@ public class MapInfo extends MapInfoBase {
         if (xOfLocation_x - 1 >= 0 && yOfLocation_y + 2 <= 14 && isWall(xOfLocation_x - 1, yOfLocation_y + 2)) {
             value += WALL_1;
         }
-        if (xOfLocation_x - 1 >= 0 && yOfLocation_y + 2 <= 14 && isGost(xOfLocation_x - 1, yOfLocation_y + 2)) {
+        if (xOfLocation_x - 1 >= 0 && yOfLocation_y + 2 <= 14 && isGhost(xOfLocation_x - 1, yOfLocation_y + 2)) {
             value += GHOST_2;
         }
-        if (xOfLocation_x - 1 >= 0 && yOfLocation_y + 2 <= 14 && !isGost(xOfLocation_x - 1, yOfLocation_y + 2)) {
+        if (xOfLocation_x - 1 >= 0 && yOfLocation_y + 2 <= 14 && !isGhost(xOfLocation_x - 1, yOfLocation_y + 2)) {
             if (9 > charInMapToInt(xOfLocation_x - 1, yOfLocation_y + 2)
                     && charInMapToInt(xOfLocation_x - 1, yOfLocation_y + 2) >= 0) {
                 value += charInMapToInt(xOfLocation_x - 1, yOfLocation_y + 2);
@@ -650,10 +668,10 @@ public class MapInfo extends MapInfoBase {
         }
 
         // (x,y+4)
-//					if (xOfLocation_x >= 0 && yOfLocation_y + 4 <= 14 && isGost(xOfLocation_x, yOfLocation_y + 4)) {
+//					if (xOfLocation_x >= 0 && yOfLocation_y + 4 <= 14 && isGhost(xOfLocation_x, yOfLocation_y + 4)) {
 //						value += -6;
 //					}
-        if (xOfLocation_x >= 0 && yOfLocation_y + 4 <= 14 && !isGost(xOfLocation_x, yOfLocation_y + 4)) {
+        if (xOfLocation_x >= 0 && yOfLocation_y + 4 <= 14 && !isGhost(xOfLocation_x, yOfLocation_y + 4)) {
             if (9 > charInMapToInt(xOfLocation_x, yOfLocation_y + 4)
                     && charInMapToInt(xOfLocation_x, yOfLocation_y + 4) >= 0) {
                 value += charInMapToInt(xOfLocation_x, yOfLocation_y + 4);
@@ -664,10 +682,10 @@ public class MapInfo extends MapInfoBase {
         if (xOfLocation_x + 1 <= 14 && yOfLocation_y + 2 <= 14 && isWall(xOfLocation_x + 1, yOfLocation_y + 2)) {
             value += WALL_1;
         }
-        if (xOfLocation_x + 1 <= 14 && yOfLocation_y + 2 <= 14 && isGost(xOfLocation_x + 1, yOfLocation_y + 2)) {
+        if (xOfLocation_x + 1 <= 14 && yOfLocation_y + 2 <= 14 && isGhost(xOfLocation_x + 1, yOfLocation_y + 2)) {
             value += GHOST_2;
         }
-        if (xOfLocation_x + 1 <= 14 && yOfLocation_y + 2 <= 14 && !isGost(xOfLocation_x + 1, yOfLocation_y + 2)) {
+        if (xOfLocation_x + 1 <= 14 && yOfLocation_y + 2 <= 14 && !isGhost(xOfLocation_x + 1, yOfLocation_y + 2)) {
             if (9 > charInMapToInt(xOfLocation_x + 1, yOfLocation_y + 2)
                     && charInMapToInt(xOfLocation_x + 1, yOfLocation_y + 2) >= 0) {
                 value += charInMapToInt(xOfLocation_x + 1, yOfLocation_y + 2);
@@ -675,10 +693,10 @@ public class MapInfo extends MapInfoBase {
         }
 
         // (x+2,y+1)
-        if (xOfLocation_x + 2 <= 14 && yOfLocation_y + 1 <= 14 && isGost(xOfLocation_x + 2, yOfLocation_y + 1)) {
+        if (xOfLocation_x + 2 <= 14 && yOfLocation_y + 1 <= 14 && isGhost(xOfLocation_x + 2, yOfLocation_y + 1)) {
             value += GHOST_2;
         }
-        if (xOfLocation_x + 2 <= 14 && yOfLocation_y + 1 <= 14 && !isGost(xOfLocation_x + 2, yOfLocation_y + 1)) {
+        if (xOfLocation_x + 2 <= 14 && yOfLocation_y + 1 <= 14 && !isGhost(xOfLocation_x + 2, yOfLocation_y + 1)) {
             if (9 > charInMapToInt(xOfLocation_x + 2, yOfLocation_y + 1)
                     && charInMapToInt(xOfLocation_x + 2, yOfLocation_y + 1) >= 0) {
                 value += charInMapToInt(xOfLocation_x + 2, yOfLocation_y + 1);

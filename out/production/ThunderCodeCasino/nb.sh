@@ -2,7 +2,9 @@
 
 while [ true ]
 do
-   java Client && sleep 7s
+   echo "start..."
+   java Client && sleep 7s 
+   echo "over..."
 done
    
 
