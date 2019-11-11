@@ -1,13 +1,13 @@
 public class MapInfo extends MapInfoBase {
 
     //幽灵危险等级，从高到低：1——>3
-    private final int GHOST_1 = -23;
-    private final int GHOST_2 = -15;
-    private final int GHOST_3 = -9;
+    private final int GHOST_1 = -30;
+    private final int GHOST_2 = -20;
+    private final int GHOST_3 = -12;
 
     //墙的危险等级，从高到低：1——>2
-    private final int WALL_1 = -4;
-    private final int WALL_2 = -2;
+    private final int WALL_1 = -8;
+    private final int WALL_2 = -4;
 
     /**
      * 获取下次行动的方向
@@ -25,7 +25,7 @@ public class MapInfo extends MapInfoBase {
 
         //正上方
         if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y) && isGhost(xOfLocation_x - 1, yOfLocation_y)) {
-            if ((mCurrentDirection == 1 || mCurrentDirection == 2 || mCurrentDirection ==3) && !ghostWillMove()){
+            if ((mCurrentDirection == 1 || mCurrentDirection == 2 || mCurrentDirection ==3) ){
                 return mCurrentDirection;
             }
         }
@@ -37,7 +37,7 @@ public class MapInfo extends MapInfoBase {
 
         //正下方
         if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y) && isGhost(xOfLocation_x + 1, yOfLocation_y)) {
-            if ((mCurrentDirection == 0 || mCurrentDirection == 2 || mCurrentDirection ==3) && !ghostWillMove()){
+            if ((mCurrentDirection == 0 || mCurrentDirection == 2 || mCurrentDirection ==3)){
                 return mCurrentDirection;
             }
         }
@@ -49,7 +49,7 @@ public class MapInfo extends MapInfoBase {
 
         //正左方
         if (!isOutOfBounds(xOfLocation_x, yOfLocation_y - 1) && isGhost(xOfLocation_x, yOfLocation_y - 1)) {
-            if ((mCurrentDirection == 0 || mCurrentDirection == 1 || mCurrentDirection ==3) && !ghostWillMove()){
+            if ((mCurrentDirection == 0 || mCurrentDirection == 1 || mCurrentDirection ==3) ){
                 return mCurrentDirection;
             }
         }
@@ -61,7 +61,7 @@ public class MapInfo extends MapInfoBase {
 
         //正右方
         if (!isOutOfBounds(xOfLocation_x, yOfLocation_y + 1) && isGhost(xOfLocation_x, yOfLocation_y + 1)) {
-            if ((mCurrentDirection == 0 || mCurrentDirection == 1 || mCurrentDirection ==2) && !ghostWillMove()){
+            if ((mCurrentDirection == 0 || mCurrentDirection == 1 || mCurrentDirection ==2)  ){
                 return mCurrentDirection;
             }
         }
@@ -72,16 +72,16 @@ public class MapInfo extends MapInfoBase {
         }
 
         // 幽灵在四周对角的情况规避
-        /*if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGhost(xOfLocation_x - 1, yOfLocation_y - 1)
+        if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGhost(xOfLocation_x - 1, yOfLocation_y - 1)
                 && !isOutOfBounds(xOfLocation_x + 1, yOfLocation_y + 1)
-                && isGhost(xOfLocation_x + 1, yOfLocation_y + 1)) {
+                && isGhost(xOfLocation_x + 1, yOfLocation_y + 1)&&!ghostWillMove()) {
             return mCurrentDirection;
         }
         if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y + 1) && isGhost(xOfLocation_x - 1, yOfLocation_y + 1)
                 && !isOutOfBounds(xOfLocation_x + 1, yOfLocation_y - 1)
-                && isGhost(xOfLocation_x + 1, yOfLocation_y - 1)) {
+                && isGhost(xOfLocation_x + 1, yOfLocation_y - 1)&&!ghostWillMove()) {
             return mCurrentDirection;
-        }*/
+        }
         //幽灵在四周对角点
         if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y - 1) && isGhost(xOfLocation_x - 1, yOfLocation_y - 1)) {
             if ((mCurrentDirection == 0 || mCurrentDirection == 2) && !ghostWillMove()) {
@@ -202,14 +202,15 @@ public class MapInfo extends MapInfoBase {
 
     private int upCommad(int value) {
         // (x-1,y)
-        if (charInMapToInt(xOfLocation_x - 1, yOfLocation_y) >= 4) {
-            value += 15;
+        if (!isOutOfBounds(xOfLocation_x-1, yOfLocation_y)&&!isGhost(xOfLocation_x-1, yOfLocation_y)&&!isWall(xOfLocation_x-1, yOfLocation_y)&&charInMapToInt(xOfLocation_x - 1, yOfLocation_y) >= 1&&
+        		!isOutOfBounds(xOfLocation_x-2, yOfLocation_y)&&!isGhost(xOfLocation_x-2, yOfLocation_y)&&!isWall(xOfLocation_x-2, yOfLocation_y)&&charInMapToInt(xOfLocation_x-2 , yOfLocation_y) >= 1&&
+        		!isOutOfBounds(xOfLocation_x-3, yOfLocation_y)&&!isGhost(xOfLocation_x-3, yOfLocation_y)&&!isWall(xOfLocation_x-3, yOfLocation_y)&&charInMapToInt(xOfLocation_x-3 , yOfLocation_y) >= 1&&
+        		!isOutOfBounds(xOfLocation_x-4, yOfLocation_y)&&!isGhost(xOfLocation_x-4, yOfLocation_y)&&!isWall(xOfLocation_x-4, yOfLocation_y)&&charInMapToInt(xOfLocation_x-4 , yOfLocation_y) >= 1) {
+            value += 35;
         } else {
-            if (charInMapToInt(xOfLocation_x - 1, yOfLocation_y) == 0) {
-                value += -1;
-            }
+            
             if (charInMapToInt(xOfLocation_x - 1, yOfLocation_y) >= 1) {
-                value += 6;//优先吃身边1,2,3
+                value += 8;//优先吃身边1,2,3
             }
             value += Integer.parseInt(String.valueOf(map[xOfLocation_x - 1][yOfLocation_y]));
         }
@@ -338,14 +339,15 @@ public class MapInfo extends MapInfoBase {
 
     private int downCommand(int value) {
         // (x+1,y)
-        if (charInMapToInt(xOfLocation_x + 1, yOfLocation_y) >= 4) {
-            value += 15;
+    	if (!isOutOfBounds(xOfLocation_x+1, yOfLocation_y)&&!isWall(xOfLocation_x+1, yOfLocation_y)&&!isGhost(xOfLocation_x+1, yOfLocation_y)&&charInMapToInt(xOfLocation_x + 1, yOfLocation_y) >= 1&&
+        		!isOutOfBounds(xOfLocation_x+2, yOfLocation_y)&&!isWall(xOfLocation_x+2, yOfLocation_y)&&!isGhost(xOfLocation_x+2, yOfLocation_y)&&charInMapToInt(xOfLocation_x + 2, yOfLocation_y) >= 1&&
+        		!isOutOfBounds(xOfLocation_x+3, yOfLocation_y)&&!isWall(xOfLocation_x+3, yOfLocation_y)&&!isGhost(xOfLocation_x+3, yOfLocation_y)&&charInMapToInt(xOfLocation_x + 3, yOfLocation_y) >= 1&&
+        		!isOutOfBounds(xOfLocation_x+4, yOfLocation_y)&&!isWall(xOfLocation_x+4, yOfLocation_y)&&!isGhost(xOfLocation_x+4, yOfLocation_y)&&charInMapToInt(xOfLocation_x + 4, yOfLocation_y) >= 1) {
+            value += 35;
         } else {
-            if (charInMapToInt(xOfLocation_x + 1, yOfLocation_y) == 0) {
-                value += -1;
-            }
+            
             if (charInMapToInt(xOfLocation_x + 1, yOfLocation_y) >= 1) {
-                value += 6;//优先吃身边1,2,3
+                value += 8;//优先吃身边1,2,3
             }
             value += Integer.parseInt(String.valueOf(map[xOfLocation_x + 1][yOfLocation_y]));
 
@@ -470,14 +472,15 @@ public class MapInfo extends MapInfoBase {
 
     private int leftCommand(int value) {
         // (x,y-1)
-        if (charInMapToInt(xOfLocation_x, yOfLocation_y - 1) >= 4) {
-            value += 15;
+    	if (!isOutOfBounds(xOfLocation_x, yOfLocation_y-1)&&!isWall(xOfLocation_x, yOfLocation_y-1)&&!isGhost(xOfLocation_x, yOfLocation_y-1)&&charInMapToInt(xOfLocation_x, yOfLocation_y-1) >= 1&&
+        		!isOutOfBounds(xOfLocation_x, yOfLocation_y-2)&&!isWall(xOfLocation_x, yOfLocation_y-2)&&!isGhost(xOfLocation_x, yOfLocation_y-2)&&charInMapToInt(xOfLocation_x , yOfLocation_y-2) >= 1&&
+        		!isOutOfBounds(xOfLocation_x, yOfLocation_y-3)&&!isWall(xOfLocation_x, yOfLocation_y-3)&&!isGhost(xOfLocation_x, yOfLocation_y-3)&&charInMapToInt(xOfLocation_x, yOfLocation_y-3) >= 1&&
+        		!isOutOfBounds(xOfLocation_x, yOfLocation_y-4)&&!isWall(xOfLocation_x, yOfLocation_y-4)&&!isGhost(xOfLocation_x, yOfLocation_y-4)&&charInMapToInt(xOfLocation_x, yOfLocation_y-4) >= 1) {
+            value += 35;
         } else {
-            if (yOfLocation_y - 2 >= 0 && charInMapToInt(xOfLocation_x, yOfLocation_y - 1) == 0) {
-                value += -1;
-            }
+            
             if (charInMapToInt(xOfLocation_x, yOfLocation_y - 1) >= 1) {
-                value += 6;//优先吃身边1,2,3
+                value += 8;//优先吃身边1,2,3
             }
             value += Integer.parseInt(String.valueOf(map[xOfLocation_x][yOfLocation_y - 1]));
 
@@ -602,14 +605,15 @@ public class MapInfo extends MapInfoBase {
 
     private int rightCommand(int value) {
         // (x,y+1)
-        if (charInMapToInt(xOfLocation_x, yOfLocation_y + 1) >= 4) {
-            value += 15;
+    	if (!isOutOfBounds(xOfLocation_x, yOfLocation_y+1)&&!isWall(xOfLocation_x, yOfLocation_y+1)&&!isGhost(xOfLocation_x, yOfLocation_y+1)&&charInMapToInt(xOfLocation_x, yOfLocation_y+1) >= 1&&
+        		!isOutOfBounds(xOfLocation_x, yOfLocation_y+2)&&!isWall(xOfLocation_x, yOfLocation_y+2)&&!isGhost(xOfLocation_x, yOfLocation_y+2)&&charInMapToInt(xOfLocation_x , yOfLocation_y+2) >= 1&&
+        		!isOutOfBounds(xOfLocation_x, yOfLocation_y+3)&&!isWall(xOfLocation_x, yOfLocation_y+3)&&!isGhost(xOfLocation_x, yOfLocation_y+3)&&charInMapToInt(xOfLocation_x, yOfLocation_y+3) >= 1&&
+        		!isOutOfBounds(xOfLocation_x, yOfLocation_y+4)&&!isWall(xOfLocation_x, yOfLocation_y+4)&&!isGhost(xOfLocation_x, yOfLocation_y+4)&&charInMapToInt(xOfLocation_x, yOfLocation_y+4) >= 1) {
+            value += 35;
         } else {
-            if (charInMapToInt(xOfLocation_x, yOfLocation_y + 1) == 0) {
-                value += -1;
-            }
+            
             if (charInMapToInt(xOfLocation_x, yOfLocation_y + 1) >= 1) {
-                value += 6;//优先吃身边1,2,3
+                value += 8;//优先吃身边1,2,3
             }
             value += Integer.parseInt(String.valueOf(map[xOfLocation_x][yOfLocation_y + 1]));
 

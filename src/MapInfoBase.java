@@ -8,7 +8,7 @@ public abstract class MapInfoBase {
 
     // 当前方向 w,s,a,d 对应 0,1,2,3
     int mCurrentDirection;
-    // 判断当前鬼是否移动 0:动 , 1：不动
+    // 当前走了多少步
     int mStepNum = 0;
 
     /**
@@ -92,6 +92,30 @@ public abstract class MapInfoBase {
                         map[j][k] = "9".charAt(0);
 //                        System.out.println(map[j][k] + "");
                     }
+                    if (isWall(0, 3)&&isWall(1, 2)&&isWall(2, 1)) {
+                    	map[3][0] = "9".charAt(0);
+                    }
+					if (isWall(3, 0)&&isWall(1, 2)&&isWall(2, 1)) {
+						map[0][3] = "9".charAt(0);
+					}
+					if (isWall(11, 0)&&isWall(12, 1)&&isWall(13, 2)) {
+						map[14][3] = "9".charAt(0);
+					}
+					if (isWall(14, 3)&&isWall(12, 1)&&isWall(13, 2)) {
+						map[11][0] = "9".charAt(0);
+					}
+					if (isWall(0, 11)&&isWall(1, 12)&&isWall(2, 13)) {
+						map[3][14] = "9".charAt(0);
+					}
+					if (isWall(3, 14)&&isWall(1, 12)&&isWall(2, 13)) {
+						map[0][11] = "9".charAt(0);
+					}
+					if (isWall(11, 14)&&isWall(12, 13)&&isWall(13, 12)) {
+						map[14][11] = "9".charAt(0);
+					}
+					if (isWall(14, 11)&&isWall(12, 13)&&isWall(13, 12)) {
+						map[11][14] = "9".charAt(0);
+					}
                 }
 
             }
