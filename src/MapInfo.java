@@ -1,9 +1,9 @@
 public class MapInfo extends MapInfoBase {
 
 	// 幽灵危险等级，从高到低：1——>3
-	private final int GHOST_1 = -26;
-	private final int GHOST_2 = -16;
-	private final int GHOST_3 = -8;
+	private final int GHOST_1 = -60;
+	private final int GHOST_2 = -30;
+	private final int GHOST_3 = -15;
 
 	// 墙的危险等级，从高到低：1——>2
 	private final int WALL_1 = -8;
@@ -27,20 +27,88 @@ public class MapInfo extends MapInfoBase {
 		
 		// 正上方
 		if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y) && isGhost(xOfLocation_x - 1, yOfLocation_y)) {
-			if ((mCurrentDirection == 1 || mCurrentDirection == 2 || mCurrentDirection == 3)) {
+			if (mCurrentDirection == 1) {
+				if (!isOutOfBounds(xOfLocation_x + 1 ,yOfLocation_y) && !isWall(xOfLocation_x + 1 ,yOfLocation_y)
+						&& !isGhost(xOfLocation_x + 1 ,yOfLocation_y)) {
+					return mCurrentDirection;
+				}
 				return mCurrentDirection;
+			} else if (mCurrentDirection == 2){
+				if (!isOutOfBounds(xOfLocation_x ,yOfLocation_y - 1) && !isWall(xOfLocation_x ,yOfLocation_y - 1)
+						&& !isGhost(xOfLocation_x ,yOfLocation_y - 1)) {
+					return mCurrentDirection;
+				}
+			} else if (mCurrentDirection == 3) {
+				if (!isOutOfBounds(xOfLocation_x ,yOfLocation_y + 1) && !isWall(xOfLocation_x ,yOfLocation_y + 1)
+						&& !isGhost(xOfLocation_x ,yOfLocation_y + 1)) {
+					return mCurrentDirection;
+				}
 			}
 		} else if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y) && isGhost(xOfLocation_x + 1, yOfLocation_y)) {// 正下方
-			if ((mCurrentDirection == 0 || mCurrentDirection == 2 || mCurrentDirection == 3)) {
+			/*if ((mCurrentDirection == 0 || mCurrentDirection == 2 || mCurrentDirection == 3)) {
 				return mCurrentDirection;
+			}*//*if (((mCurrentDirection == 0 && !isGhost(xOfLocation_x - 1, yOfLocation_y))
+					|| (mCurrentDirection == 3 && !isGhost(xOfLocation_x, yOfLocation_y + 1))) && !ghostWillMove()) {
+				return mCurrentDirection;
+			} else */
+			if (mCurrentDirection == 0) {
+				if (!isOutOfBounds(xOfLocation_x - 1 ,yOfLocation_y) && !isWall(xOfLocation_x - 1 ,yOfLocation_y)
+						&& !isGhost(xOfLocation_x - 1 ,yOfLocation_y)) {
+					return mCurrentDirection;
+				}
+				return mCurrentDirection;
+			} else if (mCurrentDirection == 2){
+				if (!isOutOfBounds(xOfLocation_x ,yOfLocation_y - 1) && !isWall(xOfLocation_x ,yOfLocation_y - 1)
+						&& !isGhost(xOfLocation_x ,yOfLocation_y - 1)) {
+					return mCurrentDirection;
+				}
+			} else if (mCurrentDirection == 3) {
+				if (!isOutOfBounds(xOfLocation_x ,yOfLocation_y + 1) && !isWall(xOfLocation_x ,yOfLocation_y + 1)
+						&& !isGhost(xOfLocation_x ,yOfLocation_y + 1)) {
+					return mCurrentDirection;
+				}
 			}
 		}else if (!isOutOfBounds(xOfLocation_x, yOfLocation_y - 1) && isGhost(xOfLocation_x, yOfLocation_y - 1)) {// 正左方
-			if ((mCurrentDirection == 0 || mCurrentDirection == 1 || mCurrentDirection == 3)) {
+			/*if ((mCurrentDirection == 0 || mCurrentDirection == 1 || mCurrentDirection == 3)) {
 				return mCurrentDirection;
+			}*/
+			if (mCurrentDirection == 0) {
+				if (!isOutOfBounds(xOfLocation_x - 1 ,yOfLocation_y) && !isWall(xOfLocation_x - 1 ,yOfLocation_y)
+						&& !isGhost(xOfLocation_x - 1 ,yOfLocation_y)) {
+					return mCurrentDirection;
+				}
+				return mCurrentDirection;
+			} else if (mCurrentDirection == 1){
+				if (!isOutOfBounds(xOfLocation_x + 1 ,yOfLocation_y) && !isWall(xOfLocation_x + 1 ,yOfLocation_y)
+						&& !isGhost(xOfLocation_x + 1 ,yOfLocation_y)) {
+					return mCurrentDirection;
+				}
+			} else if (mCurrentDirection == 3) {
+				if (!isOutOfBounds(xOfLocation_x ,yOfLocation_y + 1) && !isWall(xOfLocation_x ,yOfLocation_y + 1)
+						&& !isGhost(xOfLocation_x ,yOfLocation_y + 1)) {
+					return mCurrentDirection;
+				}
 			}
 		}else if (!isOutOfBounds(xOfLocation_x, yOfLocation_y + 1) && isGhost(xOfLocation_x, yOfLocation_y + 1)) {// 正右方
-			if ((mCurrentDirection == 0 || mCurrentDirection == 1 || mCurrentDirection == 2)) {
+			/*if ((mCurrentDirection == 0 || mCurrentDirection == 1 || mCurrentDirection == 2)) {
 				return mCurrentDirection;
+			}*/
+			if (mCurrentDirection == 0) {
+				if (!isOutOfBounds(xOfLocation_x - 1 ,yOfLocation_y) && !isWall(xOfLocation_x - 1 ,yOfLocation_y)
+						&& !isGhost(xOfLocation_x - 1 ,yOfLocation_y)) {
+					return mCurrentDirection;
+				}
+				return mCurrentDirection;
+			} else if (mCurrentDirection == 1){
+				if (!isOutOfBounds(xOfLocation_x + 1 ,yOfLocation_y) && !isWall(xOfLocation_x + 1 ,yOfLocation_y)
+						&& !isGhost(xOfLocation_x + 1 ,yOfLocation_y)) {
+					return mCurrentDirection;
+				}
+			} else if (mCurrentDirection == 2) {
+				if (!isOutOfBounds(xOfLocation_x ,yOfLocation_y - 1) && !isWall(xOfLocation_x ,yOfLocation_y - 1)
+						&& !isGhost(xOfLocation_x ,yOfLocation_y - 1)) {
+					return mCurrentDirection;
+				}
 			}
 		}
 		
@@ -776,7 +844,7 @@ public class MapInfo extends MapInfoBase {
 		for (int i = 0; i < numFruit.length; i++) {
 			numFruit[i] = 0;
 		}
-		for (int i = xOfLocation_x-1; i >= xOfLocation_x-5; i--) {
+		for (int i = xOfLocation_x-1; i >= xOfLocation_x-8; i--) {
 			if (!isOutOfBounds(i, yOfLocation_y)&&!isWall(i, yOfLocation_y)&&!isGhost(i, yOfLocation_y)
 					&& charInMapToInt(i, yOfLocation_y) >= 1) {
 				numFruit[0]++;
@@ -785,7 +853,7 @@ public class MapInfo extends MapInfoBase {
 			}
 		}
 		
-		for (int i = xOfLocation_x+1; i <= xOfLocation_x+5; i++) {
+		for (int i = xOfLocation_x+1; i <= xOfLocation_x+8; i++) {
 			if (!isOutOfBounds(i, yOfLocation_y)&&!isWall(i, yOfLocation_y)&&!isGhost(i, yOfLocation_y)
 					&& charInMapToInt(i, yOfLocation_y) >= 1) {
 				numFruit[1]++;
@@ -794,7 +862,7 @@ public class MapInfo extends MapInfoBase {
 			}
 		}
 		
-		for (int i = yOfLocation_y-1; i <= yOfLocation_y-5; i--) {
+		for (int i = yOfLocation_y-1; i <= yOfLocation_y-8; i--) {
 			if (!isOutOfBounds(xOfLocation_x, i)&&!isWall(xOfLocation_x, i)&&!isGhost(xOfLocation_x, i)
 					&& charInMapToInt(xOfLocation_x, i) >= 1) {
 				numFruit[2]++;
@@ -803,7 +871,7 @@ public class MapInfo extends MapInfoBase {
 			}
 		}
 		
-		for (int i = yOfLocation_y+1; i <= yOfLocation_y+5; i++) {
+		for (int i = yOfLocation_y+1; i <= yOfLocation_y+8; i++) {
 			if (!isOutOfBounds(xOfLocation_x, i)&&!isWall(xOfLocation_x, i)&&!isGhost(xOfLocation_x, i)
 					&& charInMapToInt(xOfLocation_x, i) >= 1) {
 				numFruit[3]++;
