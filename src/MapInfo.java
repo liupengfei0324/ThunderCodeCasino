@@ -1,14 +1,16 @@
 public class MapInfo extends MapInfoBase {
 
 	// 幽灵危险等级，从高到低：1——>3
-	private final int GHOST_1 = -28;
-	private final int GHOST_2 = -18;
-	private final int GHOST_3 = -10;
+	private final int GHOST_1 = -26;
+	private final int GHOST_2 = -16;
+	private final int GHOST_3 = -8;
 
 	// 墙的危险等级，从高到低：1——>2
 	private final int WALL_1 = -8;
 	private final int WALL_2 = -4;
 
+	int[] numFruit = new int[4];
+	
 	/**
 	 * 获取下次行动的方向
 	 *
@@ -22,7 +24,7 @@ public class MapInfo extends MapInfoBase {
 		for (int i = 0; i < 4; i++) {
 			valuesFlag[i] = -1000;
 		}
-
+		
 		// 正上方
 		if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y) && isGhost(xOfLocation_x - 1, yOfLocation_y)) {
 			if ((mCurrentDirection == 1 || mCurrentDirection == 2 || mCurrentDirection == 3)) {
@@ -205,16 +207,17 @@ public class MapInfo extends MapInfoBase {
 
 	private int upCommad(int value) {
 		// (x-1,y)
-		if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y) && !isGhost(xOfLocation_x - 1, yOfLocation_y)
-				&& !isWall(xOfLocation_x - 1, yOfLocation_y) && charInMapToInt(xOfLocation_x - 1, yOfLocation_y) >= 1
-				&& !isOutOfBounds(xOfLocation_x - 2, yOfLocation_y) && !isGhost(xOfLocation_x - 2, yOfLocation_y)
-				&& !isWall(xOfLocation_x - 2, yOfLocation_y) && charInMapToInt(xOfLocation_x - 2, yOfLocation_y) >= 1
-				&& !isOutOfBounds(xOfLocation_x - 3, yOfLocation_y) && !isGhost(xOfLocation_x - 3, yOfLocation_y)
-				&& !isWall(xOfLocation_x - 3, yOfLocation_y) && charInMapToInt(xOfLocation_x - 3, yOfLocation_y) >= 1
-				&& !isOutOfBounds(xOfLocation_x - 4, yOfLocation_y) && !isGhost(xOfLocation_x - 4, yOfLocation_y)
-				&& !isWall(xOfLocation_x - 4, yOfLocation_y) && charInMapToInt(xOfLocation_x - 4, yOfLocation_y) >= 1
-				&& !isOutOfBounds(xOfLocation_x - 5, yOfLocation_y) && !isGhost(xOfLocation_x - 5, yOfLocation_y)
-				&& !isWall(xOfLocation_x - 5, yOfLocation_y) && charInMapToInt(xOfLocation_x - 5, yOfLocation_y) >= 1) {
+//		if (!isOutOfBounds(xOfLocation_x - 1, yOfLocation_y) && !isGhost(xOfLocation_x - 1, yOfLocation_y)
+//				&& !isWall(xOfLocation_x - 1, yOfLocation_y) && charInMapToInt(xOfLocation_x - 1, yOfLocation_y) >= 1
+//				&& !isOutOfBounds(xOfLocation_x - 2, yOfLocation_y) && !isGhost(xOfLocation_x - 2, yOfLocation_y)
+//				&& !isWall(xOfLocation_x - 2, yOfLocation_y) && charInMapToInt(xOfLocation_x - 2, yOfLocation_y) >= 1
+//				&& !isOutOfBounds(xOfLocation_x - 3, yOfLocation_y) && !isGhost(xOfLocation_x - 3, yOfLocation_y)
+//				&& !isWall(xOfLocation_x - 3, yOfLocation_y) && charInMapToInt(xOfLocation_x - 3, yOfLocation_y) >= 1
+//				&& !isOutOfBounds(xOfLocation_x - 4, yOfLocation_y) && !isGhost(xOfLocation_x - 4, yOfLocation_y)
+//				&& !isWall(xOfLocation_x - 4, yOfLocation_y) && charInMapToInt(xOfLocation_x - 4, yOfLocation_y) >= 1
+//				&& !isOutOfBounds(xOfLocation_x - 5, yOfLocation_y) && !isGhost(xOfLocation_x - 5, yOfLocation_y)
+//				&& !isWall(xOfLocation_x - 5, yOfLocation_y) && charInMapToInt(xOfLocation_x - 5, yOfLocation_y) >= 1) {
+		if (numOfFruit()==0) {
 			value += 35;
 		} else {
 
@@ -347,17 +350,18 @@ public class MapInfo extends MapInfoBase {
 
 	private int downCommand(int value) {
 		// (x+1,y)
-		if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y) && !isWall(xOfLocation_x + 1, yOfLocation_y)
-				&& !isGhost(xOfLocation_x + 1, yOfLocation_y) && charInMapToInt(xOfLocation_x + 1, yOfLocation_y) >= 1
-				&& !isOutOfBounds(xOfLocation_x + 2, yOfLocation_y) && !isWall(xOfLocation_x + 2, yOfLocation_y)
-				&& !isGhost(xOfLocation_x + 2, yOfLocation_y) && charInMapToInt(xOfLocation_x + 2, yOfLocation_y) >= 1
-				&& !isOutOfBounds(xOfLocation_x + 3, yOfLocation_y) && !isWall(xOfLocation_x + 3, yOfLocation_y)
-				&& !isGhost(xOfLocation_x + 3, yOfLocation_y) && charInMapToInt(xOfLocation_x + 3, yOfLocation_y) >= 1
-				&& !isOutOfBounds(xOfLocation_x + 4, yOfLocation_y) && !isWall(xOfLocation_x + 4, yOfLocation_y)
-				&& !isGhost(xOfLocation_x + 4, yOfLocation_y) && charInMapToInt(xOfLocation_x + 4, yOfLocation_y) >= 1
-				&& !isOutOfBounds(xOfLocation_x + 5, yOfLocation_y) && !isWall(xOfLocation_x + 5, yOfLocation_y)
-				&& !isGhost(xOfLocation_x + 5, yOfLocation_y)
-				&& charInMapToInt(xOfLocation_x + 5, yOfLocation_y) >= 1) {
+//		if (!isOutOfBounds(xOfLocation_x + 1, yOfLocation_y) && !isWall(xOfLocation_x + 1, yOfLocation_y)
+//				&& !isGhost(xOfLocation_x + 1, yOfLocation_y) && charInMapToInt(xOfLocation_x + 1, yOfLocation_y) >= 1
+//				&& !isOutOfBounds(xOfLocation_x + 2, yOfLocation_y) && !isWall(xOfLocation_x + 2, yOfLocation_y)
+//				&& !isGhost(xOfLocation_x + 2, yOfLocation_y) && charInMapToInt(xOfLocation_x + 2, yOfLocation_y) >= 1
+//				&& !isOutOfBounds(xOfLocation_x + 3, yOfLocation_y) && !isWall(xOfLocation_x + 3, yOfLocation_y)
+//				&& !isGhost(xOfLocation_x + 3, yOfLocation_y) && charInMapToInt(xOfLocation_x + 3, yOfLocation_y) >= 1
+//				&& !isOutOfBounds(xOfLocation_x + 4, yOfLocation_y) && !isWall(xOfLocation_x + 4, yOfLocation_y)
+//				&& !isGhost(xOfLocation_x + 4, yOfLocation_y) && charInMapToInt(xOfLocation_x + 4, yOfLocation_y) >= 1
+//				&& !isOutOfBounds(xOfLocation_x + 5, yOfLocation_y) && !isWall(xOfLocation_x + 5, yOfLocation_y)
+//				&& !isGhost(xOfLocation_x + 5, yOfLocation_y)
+//				&& charInMapToInt(xOfLocation_x + 5, yOfLocation_y) >= 1) {
+		if (numOfFruit()==1) {
 			value += 35;
 		} else {
 
@@ -486,17 +490,18 @@ public class MapInfo extends MapInfoBase {
 
 	private int leftCommand(int value) {
 		// (x,y-1)
-		if (!isOutOfBounds(xOfLocation_x, yOfLocation_y - 1) && !isWall(xOfLocation_x, yOfLocation_y - 1)
-				&& !isGhost(xOfLocation_x, yOfLocation_y - 1) && charInMapToInt(xOfLocation_x, yOfLocation_y - 1) >= 1
-				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y - 2) && !isWall(xOfLocation_x, yOfLocation_y - 2)
-				&& !isGhost(xOfLocation_x, yOfLocation_y - 2) && charInMapToInt(xOfLocation_x, yOfLocation_y - 2) >= 1
-				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y - 3) && !isWall(xOfLocation_x, yOfLocation_y - 3)
-				&& !isGhost(xOfLocation_x, yOfLocation_y - 3) && charInMapToInt(xOfLocation_x, yOfLocation_y - 3) >= 1
-				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y - 4) && !isWall(xOfLocation_x, yOfLocation_y - 4)
-				&& !isGhost(xOfLocation_x, yOfLocation_y - 4) && charInMapToInt(xOfLocation_x, yOfLocation_y - 4) >= 1
-				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y - 5) && !isWall(xOfLocation_x, yOfLocation_y - 5)
-				&& !isGhost(xOfLocation_x, yOfLocation_y - 5)
-				&& charInMapToInt(xOfLocation_x, yOfLocation_y - 5) >= 1) {
+//		if (!isOutOfBounds(xOfLocation_x, yOfLocation_y - 1) && !isWall(xOfLocation_x, yOfLocation_y - 1)
+//				&& !isGhost(xOfLocation_x, yOfLocation_y - 1) && charInMapToInt(xOfLocation_x, yOfLocation_y - 1) >= 1
+//				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y - 2) && !isWall(xOfLocation_x, yOfLocation_y - 2)
+//				&& !isGhost(xOfLocation_x, yOfLocation_y - 2) && charInMapToInt(xOfLocation_x, yOfLocation_y - 2) >= 1
+//				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y - 3) && !isWall(xOfLocation_x, yOfLocation_y - 3)
+//				&& !isGhost(xOfLocation_x, yOfLocation_y - 3) && charInMapToInt(xOfLocation_x, yOfLocation_y - 3) >= 1
+//				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y - 4) && !isWall(xOfLocation_x, yOfLocation_y - 4)
+//				&& !isGhost(xOfLocation_x, yOfLocation_y - 4) && charInMapToInt(xOfLocation_x, yOfLocation_y - 4) >= 1
+//				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y - 5) && !isWall(xOfLocation_x, yOfLocation_y - 5)
+//				&& !isGhost(xOfLocation_x, yOfLocation_y - 5)
+//				&& charInMapToInt(xOfLocation_x, yOfLocation_y - 5) >= 1) {
+		if (numOfFruit()==2) {
 			value += 35;
 		} else {
 
@@ -625,18 +630,20 @@ public class MapInfo extends MapInfoBase {
 
 	private int rightCommand(int value) {
 		// (x,y+1)
-		if (!isOutOfBounds(xOfLocation_x, yOfLocation_y + 1) && !isWall(xOfLocation_x, yOfLocation_y + 1)
-				&& !isGhost(xOfLocation_x, yOfLocation_y + 1) && charInMapToInt(xOfLocation_x, yOfLocation_y + 1) >= 1
-				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y + 2) && !isWall(xOfLocation_x, yOfLocation_y + 2)
-				&& !isGhost(xOfLocation_x, yOfLocation_y + 2) && charInMapToInt(xOfLocation_x, yOfLocation_y + 2) >= 1
-				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y + 3) && !isWall(xOfLocation_x, yOfLocation_y + 3)
-				&& !isGhost(xOfLocation_x, yOfLocation_y + 3) && charInMapToInt(xOfLocation_x, yOfLocation_y + 3) >= 1
-				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y + 4) && !isWall(xOfLocation_x, yOfLocation_y + 4)
-				&& !isGhost(xOfLocation_x, yOfLocation_y + 4) && charInMapToInt(xOfLocation_x, yOfLocation_y + 4) >= 1
-				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y + 5) && !isWall(xOfLocation_x, yOfLocation_y + 5)
-				&& !isGhost(xOfLocation_x, yOfLocation_y + 5)
-				&& charInMapToInt(xOfLocation_x, yOfLocation_y + 5) >= 1) {
-			value += 35;
+//		if (!isOutOfBounds(xOfLocation_x, yOfLocation_y + 1) && !isWall(xOfLocation_x, yOfLocation_y + 1)
+//				&& !isGhost(xOfLocation_x, yOfLocation_y + 1) && charInMapToInt(xOfLocation_x, yOfLocation_y + 1) >= 1
+//				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y + 2) && !isWall(xOfLocation_x, yOfLocation_y + 2)
+//				&& !isGhost(xOfLocation_x, yOfLocation_y + 2) && charInMapToInt(xOfLocation_x, yOfLocation_y + 2) >= 1
+//				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y + 3) && !isWall(xOfLocation_x, yOfLocation_y + 3)
+//				&& !isGhost(xOfLocation_x, yOfLocation_y + 3) && charInMapToInt(xOfLocation_x, yOfLocation_y + 3) >= 1
+//				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y + 4) && !isWall(xOfLocation_x, yOfLocation_y + 4)
+//				&& !isGhost(xOfLocation_x, yOfLocation_y + 4) && charInMapToInt(xOfLocation_x, yOfLocation_y + 4) >= 1
+//				&& !isOutOfBounds(xOfLocation_x, yOfLocation_y + 5) && !isWall(xOfLocation_x, yOfLocation_y + 5)
+//				&& !isGhost(xOfLocation_x, yOfLocation_y + 5)
+//				&& charInMapToInt(xOfLocation_x, yOfLocation_y + 5) >= 1) {
+//			value += 35;
+		if (numOfFruit()==3) {
+			value+=35;
 		} else {
 
 			if (charInMapToInt(xOfLocation_x, yOfLocation_y + 1) >= 1) {
@@ -761,5 +768,72 @@ public class MapInfo extends MapInfoBase {
 		}
 		return value;
 	}
-
+	
+	
+	private int numOfFruit() {
+		int numTemp ,flag,numTemp2,flag2 ;
+		
+		for (int i = 0; i < numFruit.length; i++) {
+			numFruit[i] = 0;
+		}
+		for (int i = xOfLocation_x-1; i >= xOfLocation_x-5; i--) {
+			if (!isOutOfBounds(i, yOfLocation_y)&&!isWall(i, yOfLocation_y)&&!isGhost(i, yOfLocation_y)
+					&& charInMapToInt(i, yOfLocation_y) >= 1) {
+				numFruit[0]++;
+			}else {
+				break;
+			}
+		}
+		
+		for (int i = xOfLocation_x+1; i <= xOfLocation_x+5; i++) {
+			if (!isOutOfBounds(i, yOfLocation_y)&&!isWall(i, yOfLocation_y)&&!isGhost(i, yOfLocation_y)
+					&& charInMapToInt(i, yOfLocation_y) >= 1) {
+				numFruit[1]++;
+			}else {
+				break;
+			}
+		}
+		
+		for (int i = yOfLocation_y-1; i <= yOfLocation_y-5; i--) {
+			if (!isOutOfBounds(xOfLocation_x, i)&&!isWall(xOfLocation_x, i)&&!isGhost(xOfLocation_x, i)
+					&& charInMapToInt(xOfLocation_x, i) >= 1) {
+				numFruit[2]++;
+			}else {
+				break;
+			}
+		}
+		
+		for (int i = yOfLocation_y+1; i <= yOfLocation_y+5; i++) {
+			if (!isOutOfBounds(xOfLocation_x, i)&&!isWall(xOfLocation_x, i)&&!isGhost(xOfLocation_x, i)
+					&& charInMapToInt(xOfLocation_x, i) >= 1) {
+				numFruit[3]++;
+			}else {
+				break;
+			}
+		}
+		
+		
+		for (int i = 0; i < 4; i++) {
+			System.out.print("numFruit"+"["+i+"]"+numFruit[i]+"  ");
+		}
+		if (numFruit[0]>numFruit[1]) {
+			numTemp = numFruit[0];
+			flag = 0;
+		}else {
+			numTemp = numFruit[1];
+			flag = 1;
+		}
+		if (numFruit[2]>numFruit[3]) {
+			numTemp2 = numFruit[2];
+			flag2 = 2;
+		}else {
+			numTemp2 = numFruit[3];
+			flag2 = 3;
+		}
+		if (numTemp>numTemp2) {
+			return flag;
+		}else {
+			return flag2;
+		}
+	}
 }
